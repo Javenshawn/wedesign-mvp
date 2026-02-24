@@ -1,333 +1,206 @@
 'use client'
 
 import { useState } from 'react'
-import OrderFormModal from './OrderFormModalEN'
+import OrderFormModalEN from './OrderFormModalEN'
+
+interface Plan {
+  name: string
+  price: number
+  description: string
+  features: string[]
+  popular?: boolean
+  priceId: string
+}
 
 export default function PricingSection() {
-  const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState('')
-  const [showOrderForm, setShowOrderForm] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState<'basic' | 'professional' | 'premium'>('professional')
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
+  const [showModal, setShowModal] = useState(false)
 
-  const priceMap = {
-    basic: 'price_1T4EQICY5vZ28ogKIt1fBRwd', // $299
-    professional: 'price_1T4ERcCY5vZ28ogKeAmpEtdq', // $599
-    premium: 'price_1T4ESpCY5vZ28ogKit9ENo2g' // $999
-  }
-
-  const handleOpenOrderForm = (plan: 'basic' | 'professional' | 'premium') => {
-    setSelectedPlan(plan)
-    setShowOrderForm(true)
-  }
-
-  const handleOrderSubmit = async (formData: any) => {
-    setLoading(true)
-    try {
-      // First try to save order information to database
-      try {
-        const orderResponse = await fetch('/api/orders', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            // 项目信息 - 映射到API期望的字段名
-            projectName: formData.projectName,
-            projectDescription: formData.projectDescription,
-            projectType: formData.projectType,
-            deadline: formData.deadline,
-            
-            // 品牌信息
-            companyName: formData.companyName,
-            industry: formData.industry,
-            targetAudience: formData.targetAudience,
-            competitors: formData.competitors,
-            
-            // 设计偏好
-            designStyle: formData.designStyle,
-            colorPreferences: formData.colorPreferences,
-            inspirationLinks: formData.inspirationLinks,
-            
-            // 联系信息
-            contactName: formData.contactName,
-            email: formData.email,
-            phone: formData.phone,
-            wechat: formData.wechat,
-            
-            // 订单信息
-            selectedPlan: formData.selectedPlan,
-            amount: formData.selectedPlan === 'basic' ? 29900 : formData.selectedPlan === 'professional' ? 59900 : 99900,
-            status: 'pending'
-          })
-        })
-
-        const orderResult = await orderResponse.json()
-        console.log('Order save result:', orderResult)
-      } catch (orderError) {
-        console.warn('Order save failed, continuing payment flow:', orderError)
-        // Continue payment flow even if order save fails
-      }
-
-      // Then proceed to payment
-      const checkoutResponse = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          price_id: priceMap[formData.selectedPlan as keyof typeof priceMap],
-          email: formData.email || 'customer@example.com', // Email optional, use default
-          metadata: {
-            project_name: formData.projectName,
-            contact_name: formData.contactName,
-            phone: formData.phone,
-            wechat: formData.wechat,
-            project_type: formData.projectType
-          }
-        })
-      })
-
-      const data = await checkoutResponse.json()
-      
-      if (data.url) {
-        window.location.href = data.url
-      } else {
-        alert('Payment failed: ' + (data.error || 'Unknown error'))
-        setLoading(false)
-      }
-    } catch (error) {
-      console.error('Order submission error:', error)
-      alert('Submission failed, please try again')
-      setLoading(false)
+  const plans: Plan[] = [
+    {
+      name: 'Basic',
+      price: 299,
+      description: 'Perfect for startups and small businesses',
+      features: [
+        'Logo Design',
+        'Business Card Design',
+        'Color Palette',
+        'Typography System',
+        '3 Revisions',
+        '5 Business Days Delivery',
+        'Source Files Included',
+        'Commercial Usage Rights'
+      ],
+      priceId: 'price_1T4ERcCY5vZ28ogKeAmpEtdq'
+    },
+    {
+      name: 'Professional',
+      price: 599,
+      description: 'Ideal for growing businesses',
+      features: [
+        'Everything in Basic',
+        'Complete Brand Identity',
+        'Social Media Kit',
+        'Email Signature',
+        'Presentation Template',
+        'Unlimited Revisions',
+        '3 Business Days Delivery',
+        'Priority Support',
+        'Brand Guidelines PDF'
+      ],
+      popular: true,
+      priceId: 'price_1T4ERcCY5vZ28ogKc0Vl6QfE'
+    },
+    {
+      name: 'Premium',
+      price: 999,
+      description: 'Complete solution for established brands',
+      features: [
+        'Everything in Professional',
+        'Website Design (up to 5 pages)',
+        'Packaging Design',
+        'Marketing Materials',
+        'Apparel Design',
+        'Signage Design',
+        '24-Hour Response Time',
+        'Dedicated Project Manager',
+        '30-Day Free Support'
+      ],
+      priceId: 'price_1T4ESpCY5vZ28ogKit9ENo2g'
     }
-  }
+  ]
 
-  const handleDirectBuy = async (plan: 'basic' | 'professional' | 'premium') => {
-    if (!email) {
-      alert('Please enter your email address')
-      return
-    }
-
-    setLoading(true)
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          price_id: priceMap[plan],
-          email: email
-        })
-      })
-
-      const data = await response.json()
-      
-      if (data.url) {
-        window.location.href = data.url
-      } else {
-        alert('Payment failed: ' + (data.error || 'Unknown error'))
-      }
-    } catch (error) {
-      console.error('Checkout error:', error)
-      alert('Payment failed, please try again')
-    } finally {
-      setLoading(false)
-    }
+  const handlePlanSelect = (planName: string) => {
+    setSelectedPlan(planName)
+    setShowModal(true)
   }
 
   return (
-    <section id="pricing" className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section id="pricing" className="py-16 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose the perfect plan for your business. All plans include source files and commercial rights.
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Choose the plan that fits your needs. All plans include professional design work and unlimited revisions.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Basic Package */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
-              <div className="text-5xl font-bold text-blue-600 mb-4">$299</div>
-              <p className="text-gray-600">Perfect for startups</p>
-            </div>
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>1 Logo Concept</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>2 Revisions</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>3-Day Delivery</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>Source Files (AI, PDF, PNG)</span>
-              </div>
-            </div>
-            <button
-              onClick={() => handleOpenOrderForm('basic')}
-              disabled={loading}
-              className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => (
+            <div 
+              key={index}
+              className={`bg-white rounded-2xl shadow-lg overflow-hidden border-2 ${plan.popular ? 'border-blue-500' : 'border-gray-200'}`}
             >
-              {loading ? 'Processing...' : 'Get Basic - $299'}
-            </button>
-          </div>
+              {plan.popular && (
+                <div className="bg-blue-600 text-white text-center py-2 font-bold">
+                  MOST POPULAR
+                </div>
+              )}
+              
+              <div className="p-8">
+                {/* Plan Name & Price */}
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                  <div className="flex items-baseline">
+                    <span className="text-4xl font-bold text-gray-900">${plan.price}</span>
+                    <span className="text-gray-600 ml-2">one-time payment</span>
+                  </div>
+                  <p className="text-gray-600 mt-2">{plan.description}</p>
+                </div>
 
-          {/* Professional Package */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 border-2 border-blue-500 relative transform scale-105">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold">MOST POPULAR</span>
+                {/* Features */}
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA Button */}
+                <button
+                  onClick={() => handlePlanSelect(plan.name)}
+                  className={`w-full py-3 font-bold rounded-lg transition ${
+                    plan.popular 
+                      ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                  }`}
+                >
+                  Select {plan.name} Plan
+                </button>
+              </div>
             </div>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
-              <div className="text-5xl font-bold text-blue-600 mb-4">$599</div>
-              <p className="text-gray-600">Best for growing businesses</p>
-            </div>
-            <div className="space-y-4 mb-8">
+          ))}
+        </div>
+
+        {/* Additional Info */}
+        <div className="mt-12 max-w-3xl mx-auto">
+          <div className="bg-white rounded-xl p-6 shadow">
+            <h3 className="text-xl font-bold text-gray-900 mb-4">What's Included in All Plans</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>3 Logo Concepts</span>
+                <span className="text-green-600 mr-2">✓</span>
+                <span>Professional Design Team</span>
               </div>
               <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
+                <span className="text-green-600 mr-2">✓</span>
                 <span>Unlimited Revisions</span>
               </div>
               <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>2-Day Delivery</span>
+                <span className="text-green-600 mr-2">✓</span>
+                <span>Source Files Delivery</span>
               </div>
               <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>Brand Guidelines</span>
+                <span className="text-green-600 mr-2">✓</span>
+                <span>Commercial Usage Rights</span>
               </div>
               <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>Social Media Kit</span>
+                <span className="text-green-600 mr-2">✓</span>
+                <span>30-Day Free Support</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-green-600 mr-2">✓</span>
+                <span>100% Money-back Guarantee</span>
               </div>
             </div>
-            <button
-              onClick={() => handleOpenOrderForm('professional')}
-              disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-50"
-            >
-              {loading ? 'Processing...' : 'Get Professional - $599'}
-            </button>
-          </div>
-
-          {/* Premium Package */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
-              <div className="text-5xl font-bold text-blue-600 mb-4">$999</div>
-              <p className="text-gray-600">Complete brand solution</p>
-            </div>
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>5 Logo Concepts</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>Unlimited Revisions</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>24-Hour Delivery</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>Full Brand System</span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-green-600 mr-3">✓</span>
-                <span>Website Mockups</span>
-              </div>
-            </div>
-            <button
-              onClick={() => handleOpenOrderForm('premium')}
-              disabled={loading}
-              className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-            >
-              {loading ? 'Processing...' : 'Get Premium - $999'}
-            </button>
           </div>
         </div>
 
-        {/* Email Input Section */}
-        <div className="max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-200">
-          <div className="text-center mb-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Ready to Get Started?</h3>
-            <p className="text-gray-600">
-              Enter your email below. We'll send order confirmation and design files to this address.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              className="flex-grow px-6 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-lg"
-            />
-            <button
-              onClick={() => handleOpenOrderForm('professional')}
-              disabled={loading}
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-50 whitespace-nowrap"
-            >
-              {loading ? 'Processing...' : 'Start with Professional'}
-            </button>
-          </div>
-          <p className="text-gray-500 text-sm mt-4 text-center">
-            All payments are secure and processed by Stripe.
-          </p>
-        </div>
-
-        {/* Trust & Security */}
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center space-x-8">
-            <div className="text-gray-500">✓ Secure SSL Encryption</div>
-            <div className="text-gray-500">✓ PCI Compliant</div>
-            <div className="text-gray-500">✓ 30-Day Support</div>
-          </div>
-        </div>
-
-        {/* Testing Instructions */}
-        <div className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-200">
-          <h4 className="font-bold text-blue-900 mb-2">Testing Instructions</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-800 text-sm">
-            <div>
-              <div className="font-medium mb-1">Test Card:</div>
-              <code className="bg-blue-100 px-3 py-1 rounded font-mono">4242 4242 4242 4242</code>
+        {/* Payment Security */}
+        <div className="mt-8 text-center">
+          <p className="text-gray-600 mb-4">Secure Payment via Stripe</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-green-600">🔒</span>
+              <span className="text-sm">SSL Encryption</span>
             </div>
-            <div>
-              <div className="font-medium mb-1">Other Details:</div>
-              <div>Any future expiration date</div>
-              <div>Any 3-digit CVC</div>
-              <div>Any ZIP code</div>
+            <div className="flex items-center gap-2">
+              <span className="text-blue-600">🛡️</span>
+              <span className="text-sm">PCI Compliant</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-purple-600">⭐</span>
+              <span className="text-sm">Money-back Guarantee</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Order Form Modal */}
-      <OrderFormModal
-        isOpen={showOrderForm}
-        onClose={() => setShowOrderForm(false)}
-        selectedPlan={selectedPlan}
-        onSubmit={handleOrderSubmit}
-      />
+      {showModal && selectedPlan && (
+        <OrderFormModalEN
+          plan={selectedPlan}
+          onClose={() => {
+            setShowModal(false)
+            setSelectedPlan(null)
+          }}
+        />
+      )}
     </section>
   )
 }
