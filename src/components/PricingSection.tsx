@@ -23,7 +23,7 @@ export default function PricingSection() {
   const handleOrderSubmit = async (formData: any) => {
     setLoading(true)
     try {
-      // 首先尝试保存订单信息到数据库
+      // First try to save order information to database
       try {
         const orderResponse = await fetch('/api/orders', {
           method: 'POST',
@@ -157,7 +157,7 @@ export default function PricingSection() {
               disabled={loading}
               className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? '处理中...' : '选择基础套餐 - $299'}
+              {loading ? 'Processing...' : 'Get Basic - $299'}
             </button>
           </div>
 
@@ -198,7 +198,7 @@ export default function PricingSection() {
               disabled={loading}
               className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-50"
             >
-              {loading ? '处理中...' : '选择专业套餐 - $599'}
+              {loading ? 'Processing...' : 'Get Professional - $599'}
             </button>
           </div>
 
@@ -236,7 +236,7 @@ export default function PricingSection() {
               disabled={loading}
               className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? '处理中...' : '选择高级套餐 - $999'}
+              {loading ? 'Processing...' : 'Get Premium - $999'}
             </button>
           </div>
         </div>
@@ -262,7 +262,7 @@ export default function PricingSection() {
               disabled={loading}
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-50 whitespace-nowrap"
             >
-              {loading ? '处理中...' : '开始专业套餐'}
+              {loading ? 'Processing...' : 'Start with Professional'}
             </button>
           </div>
           <p className="text-gray-500 text-sm mt-4 text-center">
@@ -297,7 +297,7 @@ export default function PricingSection() {
         </div>
       </div>
 
-      {/* 订单表单弹窗 */}
+      {/* Order Form Modal */}
       <OrderFormModal
         isOpen={showOrderForm}
         onClose={() => setShowOrderForm(false)}
