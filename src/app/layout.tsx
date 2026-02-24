@@ -28,7 +28,8 @@ export default function RootLayout({
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';" />
         <meta httpEquiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
         <link rel="icon" href="/favicon.ico" />
-      </head>
+      
+      <meta name="viewport" content="width=device-width, initial-scale=1" /></head>
       <body className={`${inter.className} bg-gray-50`}>
         <Navbar />
         <main>{children}</main>

@@ -17,6 +17,11 @@
       "source": "/",
       "destination": "https://www.wedesign.design",
       "permanent": true
+    },
+    {
+      "source": "/",
+      "destination": "https://www.wedesign.design",
+      "permanent": true
     }
   ],
   "headers": [
