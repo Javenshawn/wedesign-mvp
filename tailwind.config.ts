@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import brandSystem from './src/lib/brand-system'
 
 const config: Config = {
   darkMode: ["class"],
@@ -10,30 +11,52 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      },
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      // 字体系统
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Poppins', 'sans-serif'],
+        sans: brandSystem.typography.fonts.body,
+        heading: brandSystem.typography.fonts.heading,
+        mono: brandSystem.typography.fonts.mono,
       },
+      
+      // 字号系统
+      fontSize: brandSystem.typography.sizes,
+      fontWeight: brandSystem.typography.weights,
+      lineHeight: brandSystem.typography.lineHeights,
+      
+      // 间距系统
+      spacing: brandSystem.spacing,
+      
+      // 颜色系统
       colors: {
+        // 品牌色
+        primary: brandSystem.colors.primary,
+        secondary: brandSystem.colors.secondary,
+        neutral: brandSystem.colors.neutral,
+        
+        // 功能色
+        success: brandSystem.colors.functional.success,
+        warning: brandSystem.colors.functional.warning,
+        error: brandSystem.colors.functional.error,
+        info: brandSystem.colors.functional.info,
+        
+        // 组件色
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -55,12 +78,26 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      
+      // 圆角系统
+      borderRadius: brandSystem.borderRadius,
+      
+      // 阴影系统
+      boxShadow: brandSystem.shadows,
+      
+      // 动画系统
+      animation: {
+        ...brandSystem.animations.presets,
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.5s ease-in-out",
+        "slide-up": "slide-up 0.3s ease-out",
+        "pulse-glow": "pulse-glow 2s infinite",
       },
+      
+      // 关键帧
       keyframes: {
+        ...brandSystem.keyframes,
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -69,34 +106,29 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
-        },
-        "slide-up": {
-          from: { transform: "translateY(20px)", opacity: "0" },
-          to: { transform: "translateY(0)", opacity: "1" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(255, 149, 0, 0.7)" },
-          "50%": { boxShadow: "0 0 20px 10px rgba(255, 149, 0, 0.4)" },
-        },
       },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-in-out",
-        "slide-up": "slide-up 0.3s ease-out",
-        "pulse-glow": "pulse-glow 2s infinite",
-      },
+      
+      // 背景渐变
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(90deg, hsl(var(--primary)), hsl(30, 86%, 54%))',
-        'gradient-primary-hover': 'linear-gradient(90deg, hsl(35, 95%, 60%), hsl(30, 90%, 60%))',
+        'gradient-primary': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, #facc15 0%, #eab308 100%)',
+        'gradient-success': 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        'gradient-card': 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+        'gradient-dark': 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
       },
+      
+      // 断点系统
+      screens: brandSystem.breakpoints,
+      
+      // 其他扩展
+      transitionDuration: brandSystem.animations.durations,
+      transitionTimingFunction: brandSystem.animations.timingFunctions,
     },
   },
   plugins: [
     require("tailwindcss-animate"),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
   ],
 }
 export default config

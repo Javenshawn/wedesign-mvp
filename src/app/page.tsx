@@ -1,5 +1,7 @@
 import Hero from '@/components/Hero'
 import TrustElements from '@/components/TrustElements'
+import DesignProcess from '@/components/DesignProcess'
+import Testimonials from '@/components/Testimonials'
 import PricingSection from '@/components/PricingSection'
 
 export default function Home() {
@@ -7,51 +9,72 @@ export default function Home() {
     <>
       <Hero />
       <TrustElements />
+      <DesignProcess />
+      <Testimonials />
       <PricingSection />
       
-      {/* Final CTA - 优化转化 */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-            Join 200+ satisfied clients who trust us with their design needs.
-            Your satisfaction is 100% guaranteed.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-            <a 
-              href="#pricing" 
-              className="px-12 py-5 bg-white text-blue-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 text-lg"
-            >
-              🚀 GET STARTED NOW
-            </a>
+      {/* Final CTA - 专业转化 */}
+      <section className="py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-700 rounded-full opacity-20 -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-600 rounded-full opacity-10 translate-x-1/4 translate-y-1/4"></div>
+        </div>
+        
+        <div className="container relative">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full mb-8">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-white font-bold">🚀 READY TO GROW YOUR BUSINESS</span>
+            </div>
             
-            <a 
-              href="mailto:contact@wedesign.design" 
-              className="px-12 py-5 border-2 border-white text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300 text-lg"
-            >
-              📞 FREE CONSULTATION
-            </a>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-6 text-blue-200 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="text-white">✅</span>
-              <span>Professional Design Team</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+              Let's Create Something
+              <br />
+              <span className="text-green-400">Extraordinary Together</span>
+            </h2>
+            
+            <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
+              Join hundreds of successful businesses that trust us with their design needs.
+              Your satisfaction is our priority, backed by our 100% money-back guarantee.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+              <a 
+                href="#pricing" 
+                className="group px-14 py-6 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 text-lg flex items-center gap-3"
+              >
+                <span className="text-2xl">🎯</span>
+                GET STARTED TODAY
+                <span className="group-hover:translate-x-2 transition-transform">→</span>
+              </a>
+              
+              <a 
+                href="mailto:contact@wedesign.design" 
+                className="px-14 py-6 border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm text-lg"
+              >
+                📞 SCHEDULE FREE CONSULTATION
+              </a>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-white">✅</span>
-              <span>Unlimited Revisions</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-white">✅</span>
-              <span>Source Files Delivery</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-white">✅</span>
-              <span>100% Money-back Guarantee</span>
+            
+            {/* Trust Badges */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                <div className="text-2xl mb-2">✅</div>
+                <div className="text-sm text-blue-100">Professional Team</div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                <div className="text-2xl mb-2">⚡</div>
+                <div className="text-sm text-blue-100">Fast Delivery</div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                <div className="text-2xl mb-2">🛡️</div>
+                <div className="text-sm text-blue-100">100% Guarantee</div>
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                <div className="text-2xl mb-2">💯</div>
+                <div className="text-sm text-blue-100">Unlimited Revisions</div>
+              </div>
             </div>
           </div>
         </div>
