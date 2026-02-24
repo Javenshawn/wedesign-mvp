@@ -1,4 +1,47 @@
+'use client'
+
 export default function Home() {
+  const handleCheckout = async (plan: string) => {
+    try {
+      // 获取用户邮箱（简单实现）
+      const email = prompt('Please enter your email for order confirmation:')
+      if (!email) {
+        alert('Email is required for order confirmation')
+        return
+      }
+
+      // 验证邮箱格式
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address')
+        return
+      }
+
+      const response = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ plan, email }),
+      })
+
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Payment system error')
+      }
+      
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        alert('Error creating checkout session')
+      }
+    } catch (error: any) {
+      console.error('Checkout error:', error)
+      alert(error.message || 'Payment system error')
+    }
+  }
+
   return (
     <main className="min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
@@ -21,7 +64,10 @@ export default function Home() {
                 <li>• Standard file formats</li>
                 <li>• 7-10 business days</li>
               </ul>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+              <button 
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                onClick={() => handleCheckout('basic')}
+              >
                 Choose Basic
               </button>
             </div>
@@ -40,7 +86,10 @@ export default function Home() {
                 <li>• Source files (AI, EPS, SVG)</li>
                 <li>• 5-7 business days</li>
               </ul>
-              <button className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
+              <button 
+                className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
+                onClick={() => handleCheckout('standard')}
+              >
                 Choose Standard
               </button>
             </div>
@@ -56,7 +105,10 @@ export default function Home() {
                 <li>• All source files</li>
                 <li>• 3-5 business days</li>
               </ul>
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+              <button 
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                onClick={() => handleCheckout('premium')}
+              >
                 Choose Premium
               </button>
             </div>
