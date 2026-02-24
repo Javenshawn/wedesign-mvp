@@ -20,6 +20,9 @@ export default function Navbar() {
             <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition">
               Home
             </a>
+            <a href="/cases" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              Case Studies
+            </a>
             <a href="/#pricing" className="text-gray-700 hover:text-blue-600 font-medium transition">
               Pricing
             </a>
@@ -63,6 +66,13 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
+              </a>
+              <a 
+                href="/cases" 
+                className="block text-gray-700 hover:text-blue-600 font-medium transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Case Studies
               </a>
               <a 
                 href="/#pricing" 
