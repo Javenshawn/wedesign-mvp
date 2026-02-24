@@ -1,106 +1,117 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Menu, X, ChevronDown } from 'lucide-react'
+import { Button } from './ui/Button'
 import Logo from './Logo'
-import { useState } from 'react'
+
+const navigation = [
+  { name: 'Home', href: '/' },
+  { name: 'Case Studies', href: '/cases' },
+  { name: 'Pricing', href: '/#pricing' },
+  { name: 'Orders', href: '/admin' },
+]
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Logo and Brand */}
-          <div className="flex items-center">
-            <Logo />
-          </div>
+    <header className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 ${scrolled ? 'shadow-lg' : ''}`}>
+      <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <Logo />
+          <span className="text-xl font-bold font-heading primary-gradient-text">
+            Wedesign
+          </span>
+        </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition">
-              Home
-            </a>
-            <a href="/cases" className="text-gray-700 hover:text-blue-600 font-medium transition">
-              Case Studies
-            </a>
-            <a href="/#pricing" className="text-gray-700 hover:text-blue-600 font-medium transition">
-              Pricing
-            </a>
-            <a href="/admin" className="text-gray-700 hover:text-blue-600 font-medium transition">
-              Orders
-            </a>
-            <a 
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-6">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors hover:primary-gradient-text"
+            >
+              {item.name}
+            </Link>
+          ))}
+          
+          <Button 
+            variant="gradient" 
+            size="sm"
+            className="ml-4"
+            asChild
+          >
+            <Link 
               href="https://calendly.com/wedesign/consultation" 
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
             >
               Book Consultation
-            </a>
-          </div>
+            </Link>
+          </Button>
+        </nav>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 hover:text-blue-600"
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
+        {/* Mobile menu button */}
+        <div className="md:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-foreground/70 hover:text-foreground"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <span className="sr-only">Toggle menu</span>
+          </Button>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4">
-            <div className="space-y-3">
-              <a 
-                href="/" 
-                className="block text-gray-700 hover:text-blue-600 font-medium transition"
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden animate-fade-in">
+          <div className="container py-4 space-y-3 border-t">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="block py-2 text-base font-medium text-foreground/70 hover:text-foreground hover:primary-gradient-text transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Home
-              </a>
-              <a 
-                href="/cases" 
-                className="block text-gray-700 hover:text-blue-600 font-medium transition"
-                onClick={() => setMobileMenuOpen(false)}
+                {item.name}
+              </Link>
+            ))}
+            
+            <div className="pt-4 border-t">
+              <Button 
+                variant="gradient" 
+                className="w-full"
+                asChild
               >
-                Case Studies
-              </a>
-              <a 
-                href="/#pricing" 
-                className="block text-gray-700 hover:text-blue-600 font-medium transition"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Pricing
-              </a>
-              <a 
-                href="/admin" 
-                className="block text-gray-700 hover:text-blue-600 font-medium transition"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Orders
-              </a>
-              <a 
-                href="https://calendly.com/wedesign/consultation" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-center"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Book Consultation
-              </a>
+                <Link 
+                  href="https://calendly.com/wedesign/consultation" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Book Consultation
+                </Link>
+              </Button>
             </div>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      )}
+    </header>
   )
 }

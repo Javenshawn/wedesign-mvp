@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
-
-const inter = Inter({ subsets: ['latin'] })
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Wedesign - Professional Design Services',
@@ -13,6 +11,24 @@ export const metadata: Metadata = {
     title: 'Wedesign - Professional Design Services',
     description: 'Transform your brand with expert design services',
     type: 'website',
+    images: ['/og-image.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Wedesign - Professional Design Services',
+    description: 'Transform your brand with expert design services',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -22,36 +38,44 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         {/* Security Headers */}
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';" />
         <meta httpEquiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
         <link rel="icon" href="/favicon.ico" />
-      
-      <meta name="viewport" content="width=device-width, initial-scale=1" /></head>
-      <body className={`${inter.className} bg-gray-50`}>
-        <Navbar />
-        <main>{children}</main>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        {/* Footer */}
-        <footer className="bg-white border-t border-gray-200 py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <p className="text-gray-600">
-                © {new Date().getFullYear()} Wedesign. All rights reserved.
-              </p>
-              <p className="text-gray-500 text-sm mt-2">
-                Professional design services for businesses worldwide.
-              </p>
-              <div className="mt-4">
-                <a href="/admin" className="text-blue-600 hover:text-blue-800 text-sm">
-                  Admin Dashboard
-                </a>
-              </div>
-            </div>
-          </div>
-        </footer>
+        {/* Schema.org JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Wedesign",
+              "description": "Professional logo and brand design services",
+              "url": "https://wedesign.design",
+              "logo": "https://wedesign.design/logo.png",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "contact@wedesign.design"
+              },
+              "sameAs": [
+                "https://twitter.com/wedesign",
+                "https://linkedin.com/company/wedesign"
+              ]
+            })
+          }}
+        />
+      </head>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <div className="relative flex min-h-screen flex-col">
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   )
