@@ -2,6 +2,11 @@
 
 import { useState } from 'react'
 
+interface OrderFormModalProps {
+  plan: string
+  onClose: () => void
+}
+
 interface OrderFormData {
   // Project Information
   projectName: string

@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-import brandSystem from './src/lib/brand-system'
 
 const config: Config = {
   darkMode: ["class"],
@@ -25,31 +24,56 @@ const config: Config = {
     extend: {
       // 字体系统
       fontFamily: {
-        sans: brandSystem.typography.fonts.body,
-        heading: brandSystem.typography.fonts.heading,
-        mono: brandSystem.typography.fonts.mono,
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
-      
-      // 字号系统
-      fontSize: brandSystem.typography.sizes,
-      fontWeight: brandSystem.typography.weights,
-      lineHeight: brandSystem.typography.lineHeights,
-      
-      // 间距系统
-      spacing: brandSystem.spacing,
       
       // 颜色系统
       colors: {
         // 品牌色
-        primary: brandSystem.colors.primary,
-        secondary: brandSystem.colors.secondary,
-        neutral: brandSystem.colors.neutral,
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6', // 主蓝色
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a'
+        },
+        secondary: {
+          50: '#fefce8',
+          100: '#fef9c3',
+          200: '#fef08a',
+          300: '#fde047',
+          400: '#facc15', // 强调色
+          500: '#eab308',
+          600: '#ca8a04',
+          700: '#a16207',
+          800: '#854d0e',
+          900: '#713f12'
+        },
+        neutral: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a'
+        },
         
         // 功能色
-        success: brandSystem.colors.functional.success,
-        warning: brandSystem.colors.functional.warning,
-        error: brandSystem.colors.functional.error,
-        info: brandSystem.colors.functional.info,
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444',
+        info: '#3b82f6',
         
         // 组件色
         border: "hsl(var(--border))",
@@ -79,35 +103,6 @@ const config: Config = {
         },
       },
       
-      // 圆角系统
-      borderRadius: brandSystem.borderRadius,
-      
-      // 阴影系统
-      boxShadow: brandSystem.shadows,
-      
-      // 动画系统
-      animation: {
-        ...brandSystem.animations.presets,
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-in-out",
-        "slide-up": "slide-up 0.3s ease-out",
-        "pulse-glow": "pulse-glow 2s infinite",
-      },
-      
-      // 关键帧
-      keyframes: {
-        ...brandSystem.keyframes,
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      
       // 背景渐变
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
@@ -118,11 +113,13 @@ const config: Config = {
       },
       
       // 断点系统
-      screens: brandSystem.breakpoints,
-      
-      // 其他扩展
-      transitionDuration: brandSystem.animations.durations,
-      transitionTimingFunction: brandSystem.animations.timingFunctions,
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px'
+      },
     },
   },
   plugins: [

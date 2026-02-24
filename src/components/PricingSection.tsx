@@ -201,13 +201,56 @@ export default function PricingSection() {
 
       {/* Order Form Modal */}
       {showModal && selectedPlan && (
-        <OrderFormModalEN
-          plan={selectedPlan}
-          onClose={() => {
-            setShowModal(false)
-            setSelectedPlan(null)
-          }}
-        />
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Select {selectedPlan} Plan
+                </h3>
+                <p className="text-gray-600">
+                  You will be redirected to Stripe to complete your payment
+                </p>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="bg-blue-50 p-6 rounded-xl">
+                  <h4 className="font-bold text-blue-900 mb-2">Next Steps:</h4>
+                  <ol className="list-decimal list-inside space-y-2 text-blue-800">
+                    <li>Click "Proceed to Payment" below</li>
+                    <li>Complete the secure Stripe checkout</li>
+                    <li>Receive order confirmation email</li>
+                    <li>Our design team will contact you within 24 hours</li>
+                  </ol>
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => {
+                      // 这里应该调用支付API
+                      handlePlanSelect(selectedPlan)
+                      setShowModal(false)
+                      setSelectedPlan(null)
+                    }}
+                    className="flex-1 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300"
+                  >
+                    Proceed to Payment
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      setShowModal(false)
+                      setSelectedPlan(null)
+                    }}
+                    className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   )
