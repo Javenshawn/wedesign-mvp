@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import OrderFormModal from './OrderFormModal'
+import OrderFormModal from './OrderFormModalEN'
 
 export default function PricingSection() {
   const [loading, setLoading] = useState(false)
