@@ -38,13 +38,13 @@ export default function PricingSection() {
         })
 
         const orderResult = await orderResponse.json()
-        console.log('订单保存结果:', orderResult)
+        console.log('Order save result:', orderResult)
       } catch (orderError) {
-        console.warn('订单保存失败，继续支付流程:', orderError)
-        // 即使订单保存失败，也继续支付流程
+        console.warn('Order save failed, continuing payment flow:', orderError)
+        // Continue payment flow even if order save fails
       }
 
-      // 然后跳转到支付
+      // Then proceed to payment
       const checkoutResponse = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
@@ -52,7 +52,7 @@ export default function PricingSection() {
         },
         body: JSON.stringify({
           price_id: priceMap[formData.selectedPlan as keyof typeof priceMap],
-          email: formData.email || 'customer@example.com', // 邮箱非强制，使用默认值
+          email: formData.email || 'customer@example.com', // Email optional, use default
           metadata: {
             project_name: formData.projectName,
             contact_name: formData.contactName,
@@ -68,19 +68,19 @@ export default function PricingSection() {
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('支付失败: ' + (data.error || '未知错误'))
+        alert('Payment failed: ' + (data.error || 'Unknown error'))
         setLoading(false)
       }
     } catch (error) {
       console.error('Order submission error:', error)
-      alert('提交失败，请重试')
+      alert('Submission failed, please try again')
       setLoading(false)
     }
   }
 
   const handleDirectBuy = async (plan: 'basic' | 'professional' | 'premium') => {
     if (!email) {
-      alert('请输入邮箱地址')
+      alert('Please enter your email address')
       return
     }
 
@@ -102,11 +102,11 @@ export default function PricingSection() {
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('支付失败: ' + (data.error || '未知错误'))
+        alert('Payment failed: ' + (data.error || 'Unknown error'))
       }
     } catch (error) {
       console.error('Checkout error:', error)
-      alert('支付失败，请重试')
+      alert('Payment failed, please try again')
     } finally {
       setLoading(false)
     }
