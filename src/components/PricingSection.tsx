@@ -78,13 +78,19 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="py-16 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
+        {/* Header - 增加紧迫感和价值 */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Simple, Transparent Pricing
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 rounded-full mb-4">
+            <span className="font-bold">🔥 LIMITED TIME DISCOUNT</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Invest in Your Brand's Success
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Choose the plan that fits your needs. All plans include professional design work and unlimited revisions.
+            Professional design pays for itself. Choose a plan and start growing your business today.
+            <span className="block mt-2 text-green-600 font-medium">
+              ✅ All plans include unlimited revisions & 100% money-back guarantee
+            </span>
           </p>
         </div>
 
@@ -122,16 +128,18 @@ export default function PricingSection() {
                   ))}
                 </ul>
 
-                {/* CTA Button */}
+                {/* CTA Button - 优化文案和设计 */}
                 <button
                   onClick={() => handlePlanSelect(plan.name)}
-                  className={`w-full py-3 font-bold rounded-lg transition ${
+                  className={`w-full py-4 font-bold rounded-xl transition-all duration-300 ${
                     plan.popular 
-                      ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transform hover:-translate-y-1' 
+                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200 hover:shadow-md'
                   }`}
                 >
-                  Select {plan.name} Plan
+                  {plan.popular ? '🔥 ' : ''}
+                  {plan.popular ? 'GET STARTED NOW' : `Select ${plan.name} Plan`}
+                  {plan.popular ? ' 🚀' : ''}
                 </button>
               </div>
             </div>

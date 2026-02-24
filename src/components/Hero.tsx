@@ -1,24 +1,26 @@
 export default function Hero() {
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-blue-50">
       <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* Professional Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full mb-8">
-          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-          <span className="font-medium">Professional Design Team • 10+ Years Experience</span>
+        {/* Professional Badge - 增加紧迫感 */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full mb-8 animate-pulse">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+          <span className="font-bold">🚀 LIMITED TIME OFFER • 10+ Years Experience</span>
         </div>
 
-        {/* Main Headline */}
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          Get Professional Designs
+        {/* Main Headline - 增加情感共鸣 */}
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Professional Designs That
           <br />
-          <span className="text-blue-600">For Your Business</span>
+          <span className="text-blue-600">Grow Your Business</span>
         </h1>
 
-        {/* Subheadline */}
+        {/* Subheadline - 增加价值主张 */}
         <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
-          We create stunning logos, websites, and branding materials that help businesses stand out and grow.
-          Fast delivery, unlimited revisions, 100% satisfaction guaranteed.
+          Get stunning logos, websites, and branding that attract customers and increase sales.
+          <span className="block mt-2 text-lg font-medium text-blue-600">
+            ✅ Unlimited Revisions • ✅ 100% Money-back • ✅ Fast Delivery
+          </span>
         </p>
 
         {/* Value Propositions */}
@@ -48,21 +50,36 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - 优化按钮文案和设计 */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
           <a 
             href="#pricing" 
-            className="px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition shadow-lg"
+            className="px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg"
           >
-            View Professional Plans
+            🚀 GET STARTED - View Plans
           </a>
           
           <a 
             href="/cases" 
-            className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition"
+            className="px-10 py-5 border-2 border-blue-600 text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 text-lg"
           >
-            View Case Studies
+            📊 See Real Results
           </a>
+        </div>
+        
+        {/* 增加社会证明 */}
+        <div className="mb-8">
+          <p className="text-gray-600 mb-3">Trusted by 200+ businesses worldwide:</p>
+          <div className="flex flex-wrap justify-center gap-6 opacity-70">
+            {['TechStart', 'GreenLeaf', 'FinTech Pro', 'Creative Lab', 'Brand Masters'].map((brand, index) => (
+              <div 
+                key={index}
+                className="text-gray-700 font-bold hover:text-blue-600 transition-colors"
+              >
+                {brand}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Trust Metrics */}

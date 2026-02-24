@@ -110,13 +110,18 @@ export default function CasesPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            Our Design Portfolio
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full mb-6">
+            <span className="font-bold">📊 REAL RESULTS</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            See How We Help Businesses
+            <br />
+            <span className="text-blue-600">Grow with Design</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-            Real projects that showcase our design expertise and client success stories.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            Real projects, real results. See how our designs have helped businesses increase sales and attract customers.
           </p>
           
           {/* Stats */}
