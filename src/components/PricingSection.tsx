@@ -43,7 +43,7 @@ export default function PricingSection() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          price_id: priceMap[formData.selectedPlan],
+          price_id: priceMap[formData.selectedPlan as keyof typeof priceMap],
           email: formData.email || 'customer@example.com', // 邮箱非强制，使用默认值
           metadata: {
             project_name: formData.projectName,
