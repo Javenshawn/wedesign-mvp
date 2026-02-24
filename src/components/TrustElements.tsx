@@ -1,216 +1,275 @@
 'use client'
 
+import { motion } from 'framer-motion'
+import { Award, Users, Clock, FileText, Globe, Headphones } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card'
+
 export default function TrustElements() {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  }
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const trustCards = [
+    {
+      icon: Award,
+      title: 'Professional Certification',
+      color: 'from-blue-500/10 to-blue-600/10',
+      items: [
+        '10+ Years Design Experience',
+        'Adobe Certified Designer',
+        'UI/UX Professional Certification',
+        'Brand Strategy Expert'
+      ]
+    },
+    {
+      icon: Users,
+      title: 'Client Trust',
+      color: 'from-green-500/10 to-green-600/10',
+      stats: [
+        { value: '98%', label: 'Client Satisfaction' },
+        { value: '4.9/5', label: 'Average Rating' },
+        { value: '200+', label: 'Repeat Clients' }
+      ]
+    },
+    {
+      icon: Clock,
+      title: 'Process Excellence',
+      color: 'from-purple-500/10 to-purple-600/10',
+      items: [
+        '3-7 Days Standard Delivery',
+        '24-Hour Response Time',
+        'Unlimited Revisions',
+        'Source Files Included'
+      ]
+    }
+  ]
+
+  const processSteps = [
+    {
+      icon: FileText,
+      title: 'Brief & Quote',
+      description: 'Submit your requirements, get a detailed quote',
+      color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+    },
+    {
+      icon: Users,
+      title: 'Design & Review',
+      description: 'Our team creates designs, you review and provide feedback',
+      color: 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+    },
+    {
+      icon: Globe,
+      title: 'Global Delivery',
+      description: 'Receive final designs with source files, worldwide',
+      color: 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
+    },
+    {
+      icon: Headphones,
+      title: 'Ongoing Support',
+      description: '30-day free support for any adjustments',
+      color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400'
+    }
+  ]
+
   return (
-    <div className="py-16 bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Why Choose Wedesign?
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We don't just design, we create visual solutions that drive business growth
-          </p>
-        </div>
+    <section className="py-20 bg-gradient-to-b from-background to-muted/30">
+      <div className="container">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={staggerChildren}
+        >
+          {/* Header */}
+          <motion.div variants={fadeInUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading">
+              Why Choose <span className="primary-gradient-text">Wedesign</span>?
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              We don&apos;t just design, we create visual solutions that drive business growth
+            </p>
+          </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Professional Certification */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-              <span className="text-2xl">🏆</span>
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Professional Certification</h3>
-            <ul className="space-y-3 text-gray-600">
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>10+ Years Design Experience</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Adobe Certified Designer</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>UI/UX Professional Certification</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Brand Strategy Expert</span>
-              </li>
-            </ul>
-          </div>
+          {/* Trust Cards */}
+          <motion.div 
+            variants={staggerChildren}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+          >
+            {trustCards.map((card, index) => (
+              <motion.div key={index} variants={fadeInUp}>
+                <Card hoverEffect className="h-full border-border/50">
+                  <CardContent className="p-8">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.color} flex items-center justify-center mb-6 mx-auto`}>
+                      <card.icon className="h-8 w-8 text-foreground" />
+                    </div>
+                    
+                    <CardTitle className="text-xl text-center mb-6">
+                      {card.title}
+                    </CardTitle>
 
-          {/* Client Trust */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-              <span className="text-2xl">🤝</span>
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Client Trust</h3>
-            <div className="space-y-4">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-600">200+</div>
-                <div className="text-gray-600">Satisfied Clients</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-600">98%</div>
-                <div className="text-gray-600">Client Satisfaction</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-green-600">24/7</div>
-                <div className="text-gray-600">Customer Support</div>
-              </div>
-            </div>
-          </div>
+                    {'items' in card ? (
+                      <ul className="space-y-3">
+                        {card.items.map((item, i) => (
+                          <li key={i} className="flex items-center text-muted-foreground">
+                            <span className="text-green-600 mr-2">✓</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="space-y-4">
+                        {card.stats?.map((stat, i) => (
+                          <div key={i} className="text-center">
+                            <div className="text-3xl font-bold primary-gradient-text mb-1">
+                              {stat.value}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {stat.label}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
 
-          {/* Quality Assurance */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-              <span className="text-2xl">✨</span>
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Quality Assurance</h3>
-            <ul className="space-y-3 text-gray-600">
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Unlimited Revisions Until Satisfied</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>100% Original Design</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Source Files Delivery</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>Commercial Usage Rights</span>
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-600 mr-2">✓</span>
-                <span>30-Day Free Support</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+          {/* Process Steps */}
+          <motion.div variants={fadeInUp}>
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-card/50">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl font-heading">
+                  Simple & Transparent Process
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  From brief to delivery, we make it easy and predictable
+                </p>
+              </CardHeader>
+              
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  {processSteps.map((step, index) => (
+                    <div key={index} className="relative">
+                      {/* Connector Line */}
+                      {index < processSteps.length - 1 && (
+                        <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-border to-transparent -translate-x-1/2" />
+                      )}
+                      
+                      <div className="text-center">
+                        <div className={`w-16 h-16 rounded-2xl ${step.color} flex items-center justify-center mb-4 mx-auto`}>
+                          <step.icon className="h-8 w-8" />
+                        </div>
+                        
+                        <div className="flex items-center justify-center mb-2">
+                          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
+                            {index + 1}
+                          </div>
+                        </div>
+                        
+                        <h4 className="font-bold text-lg mb-2">{step.title}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-        {/* Payment Security */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-6 md:mb-0 md:mr-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                💳 Payment Security & Guarantee
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Secure payments via Stripe with bank-grade encryption. We never store your credit card information.
-                Your payment is protected by our satisfaction guarantee.
-              </p>
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center">
-                  <span className="text-green-600 mr-2">🔒</span>
-                  <span className="font-medium">SSL Encryption</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-green-600 mr-2">🛡️</span>
-                  <span className="font-medium">PCI Compliant</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-green-600 mr-2">✓</span>
-                  <span className="font-medium">Money-back Guarantee</span>
-                </div>
-              </div>
-            </div>
-            <div className="flex space-x-4">
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <div className="text-2xl">💳</div>
-                <div className="text-sm font-medium mt-2">Credit Card</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <div className="text-2xl">🏦</div>
-                <div className="text-sm font-medium mt-2">Bank Transfer</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <div className="text-2xl">📱</div>
-                <div className="text-sm font-medium mt-2">Digital Wallet</div>
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Security & Guarantee */}
+          <motion.div variants={fadeInUp} className="mt-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card className="border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/20">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span className="text-green-600">🔒</span>
+                    Security & Privacy
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span>End-to-end SSL encryption</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span>GDPR compliant data handling</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span>Secure payment processing via Stripe</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span>Client data never shared with third parties</span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
 
-        {/* Client Testimonials */}
-        <div className="mt-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            📣 Client Testimonials
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-xl">👨‍💼</span>
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">Alex Johnson</div>
-                  <div className="text-gray-600 text-sm">CEO, TechStart Inc.</div>
-                </div>
-              </div>
-              <p className="text-gray-700 italic">
-                "Wedesign created the perfect visual identity for our brand. Their professionalism exceeded expectations, from communication to delivery. Highly recommended!"
-              </p>
-              <div className="flex mt-4">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-yellow-400">★</span>
-                ))}
-              </div>
+              <Card className="border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/20">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <span className="text-blue-600">🛡️</span>
+                    Quality Guarantee
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center">
+                      <span className="text-blue-600 mr-2">✓</span>
+                      <span>100% money-back guarantee</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="text-blue-600 mr-2">✓</span>
+                      <span>Unlimited revisions until satisfied</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="text-blue-600 mr-2">✓</span>
+                      <span>30-day free support after delivery</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="text-blue-600 mr-2">✓</span>
+                      <span>Source files included with all plans</span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
+          </motion.div>
 
-            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-xl">👩‍💼</span>
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">Sarah Chen</div>
-                  <div className="text-gray-600 text-sm">Founder, GreenLeaf Organic</div>
-                </div>
+          {/* Final CTA */}
+          <motion.div 
+            variants={fadeInUp}
+            className="mt-16 text-center"
+          >
+            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl border border-primary/20">
+              <div className="text-left">
+                <h3 className="text-xl font-bold mb-2">Ready to transform your brand?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Join 200+ satisfied clients who trust us with their design needs
+                </p>
               </div>
-              <p className="text-gray-700 italic">
-                "Exceptional packaging design! They completely understood our brand philosophy, creating designs that are both beautiful and practical. Customer service is responsive and attentive."
-              </p>
-              <div className="flex mt-4">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-yellow-400">★</span>
-                ))}
-              </div>
+              <a 
+                href="#pricing" 
+                className="px-8 py-3 bg-gradient-to-r from-primary to-orange-500 text-white font-bold rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 whitespace-nowrap"
+              >
+                View Plans & Pricing
+              </a>
             </div>
-          </div>
-        </div>
-
-        {/* FAQ */}
-        <div className="mt-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            ❓ Frequently Asked Questions
-          </h3>
-          <div className="space-y-4 max-w-3xl mx-auto">
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-              <h4 className="font-bold text-gray-900 mb-2">Q: What is the design process like?</h4>
-              <p className="text-gray-600">
-                A: 1) Requirements discussion → 2) Concept design → 3) Initial draft presentation → 4) Revision and adjustment → 5) Final delivery. The entire process is transparent, and you can provide feedback at any stage.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-              <h4 className="font-bold text-gray-900 mb-2">Q: What if I'm not satisfied with the design?</h4>
-              <p className="text-gray-600">
-                A: We offer unlimited revisions until you're completely satisfied. If you're still not happy with the final result, we provide a 100% money-back guarantee.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-              <h4 className="font-bold text-gray-900 mb-2">Q: What file formats do you deliver?</h4>
-              <p className="text-gray-600">
-                A: We deliver all source files (AI, PSD, PDF, PNG, SVG, etc.) along with commercial usage rights, so you can use and modify them freely.
-              </p>
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   )
 }
