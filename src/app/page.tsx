@@ -1,3 +1,7 @@
+// 强制动态渲染，避免SSG问题
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 import Hero from '@/components/Hero'
 import TrustElements from '@/components/TrustElements'
 import DesignProcess from '@/components/DesignProcess'
