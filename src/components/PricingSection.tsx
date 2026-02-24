@@ -1,21 +1,77 @@
 'use client'
 
 import { useState } from 'react'
+import OrderFormModal from './OrderFormModal'
 
 export default function PricingSection() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
+  const [showOrderForm, setShowOrderForm] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState<'basic' | 'professional' | 'premium'>('professional')
 
-  const handleBuy = async (plan: 'basic' | 'professional' | 'premium') => {
-    if (!email) {
-      alert('Please enter your email')
-      return
+  const priceMap = {
+    basic: 'price_1T4EQICY5vZ28ogKIt1fBRwd', // $299
+    professional: 'price_1T4ERcCY5vZ28ogKeAmpEtdq', // $599
+    premium: 'price_1T4ESpCY5vZ28ogKit9ENo2g' // $999
+  }
+
+  const handleOpenOrderForm = (plan: 'basic' | 'professional' | 'premium') => {
+    setSelectedPlan(plan)
+    setShowOrderForm(true)
+  }
+
+  const handleOrderSubmit = async (formData: any) => {
+    setLoading(true)
+    try {
+      // 首先保存订单信息到数据库（如果需要）
+      const orderResponse = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          amount: formData.selectedPlan === 'basic' ? 29900 : formData.selectedPlan === 'professional' ? 59900 : 99900,
+          status: 'pending'
+        })
+      })
+
+      // 然后跳转到支付
+      const checkoutResponse = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          price_id: priceMap[formData.selectedPlan],
+          email: formData.email || 'customer@example.com', // 邮箱非强制，使用默认值
+          metadata: {
+            project_name: formData.projectName,
+            contact_name: formData.contactName,
+            phone: formData.phone
+          }
+        })
+      })
+
+      const data = await checkoutResponse.json()
+      
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        alert('支付失败: ' + (data.error || '未知错误'))
+        setLoading(false)
+      }
+    } catch (error) {
+      console.error('Order submission error:', error)
+      alert('提交失败，请重试')
+      setLoading(false)
     }
+  }
 
-    const priceMap = {
-      basic: 'price_1T4EQICY5vZ28ogKIt1fBRwd', // $299
-      professional: 'price_1T4ERcCY5vZ28ogKeAmpEtdq', // $599
-      premium: 'price_1T4ESpCY5vZ28ogKit9ENo2g' // $999
+  const handleDirectBuy = async (plan: 'basic' | 'professional' | 'premium') => {
+    if (!email) {
+      alert('请输入邮箱地址')
+      return
     }
 
     setLoading(true)
@@ -36,11 +92,11 @@ export default function PricingSection() {
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('Checkout failed: ' + (data.error || 'Unknown error'))
+        alert('支付失败: ' + (data.error || '未知错误'))
       }
     } catch (error) {
       console.error('Checkout error:', error)
-      alert('Checkout failed. Please try again.')
+      alert('支付失败，请重试')
     } finally {
       setLoading(false)
     }
@@ -87,11 +143,11 @@ export default function PricingSection() {
               </div>
             </div>
             <button
-              onClick={() => handleBuy('basic')}
+              onClick={() => handleOpenOrderForm('basic')}
               disabled={loading}
               className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? 'Processing...' : 'Get Basic - $299'}
+              {loading ? '处理中...' : '选择基础套餐 - $299'}
             </button>
           </div>
 
@@ -128,11 +184,11 @@ export default function PricingSection() {
               </div>
             </div>
             <button
-              onClick={() => handleBuy('professional')}
+              onClick={() => handleOpenOrderForm('professional')}
               disabled={loading}
               className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-50"
             >
-              {loading ? 'Processing...' : 'Get Professional - $599'}
+              {loading ? '处理中...' : '选择专业套餐 - $599'}
             </button>
           </div>
 
@@ -166,11 +222,11 @@ export default function PricingSection() {
               </div>
             </div>
             <button
-              onClick={() => handleBuy('premium')}
+              onClick={() => handleOpenOrderForm('premium')}
               disabled={loading}
               className="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? 'Processing...' : 'Get Premium - $999'}
+              {loading ? '处理中...' : '选择高级套餐 - $999'}
             </button>
           </div>
         </div>
@@ -192,11 +248,11 @@ export default function PricingSection() {
               className="flex-grow px-6 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-lg"
             />
             <button
-              onClick={() => handleBuy('professional')}
-              disabled={loading || !email}
+              onClick={() => handleOpenOrderForm('professional')}
+              disabled={loading}
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition disabled:opacity-50 whitespace-nowrap"
             >
-              {loading ? 'Processing...' : 'Start with Professional'}
+              {loading ? '处理中...' : '开始专业套餐'}
             </button>
           </div>
           <p className="text-gray-500 text-sm mt-4 text-center">
@@ -230,6 +286,14 @@ export default function PricingSection() {
           </div>
         </div>
       </div>
+
+      {/* 订单表单弹窗 */}
+      <OrderFormModal
+        isOpen={showOrderForm}
+        onClose={() => setShowOrderForm(false)}
+        selectedPlan={selectedPlan}
+        onSubmit={handleOrderSubmit}
+      />
     </section>
   )
 }

@@ -7,11 +7,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 export async function POST(request: NextRequest) {
   try {
-    const { price_id, email } = await request.json()
+    const { price_id, email, metadata = {} } = await request.json()
 
-    if (!price_id || !email) {
+    if (!price_id) {
       return NextResponse.json(
-        { error: 'Missing price_id or email' },
+        { error: 'Missing price_id' },
         { status: 400 }
       )
     }
@@ -27,9 +27,10 @@ export async function POST(request: NextRequest) {
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/admin`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}`,
-      customer_email: email,
+      customer_email: email || undefined, // 邮箱非强制
       metadata: {
-        email: email
+        email: email || '未提供邮箱',
+        ...metadata // 包含项目名称、联系人等元数据
       }
     })
 
