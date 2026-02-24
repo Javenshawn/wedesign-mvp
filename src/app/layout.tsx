@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   },
 }
 
+import ChatWidget from '@/components/ChatWidget'
+import BookingCalendar from '@/components/BookingCalendar'
+
 export default function RootLayout({
   children,
 }: {
@@ -75,6 +78,8 @@ export default function RootLayout({
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ChatWidget />
+          <BookingCalendar />
         </div>
       </body>
     </html>
