@@ -1,14 +1,23 @@
+'use client'
+
+import { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
+import { Search, Filter, Award, TrendingUp, Globe, Users } from 'lucide-react'
 import CaseStudyCard from '@/components/CaseStudyCard'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
+import { Badge } from '@/components/ui/Badge'
+import { Card, CardContent } from '@/components/ui/Card'
 
 // Mock data - in production this would come from Supabase
 const mockCases = [
   {
     id: '1',
-    client_name: 'TechStart Inc.',
+    client_name: 'Alex Johnson',
     company: 'TechStart Inc.',
     industry: 'SaaS / Technology',
     project_type: 'Complete Brand Identity Design',
-    package: 'Premium',
+    package: 'premium' as const,
     amount: 99900,
     description: 'Complete brand identity design for a technology startup specializing in SaaS solutions. The project included logo design, color palette, typography system, and full brand guidelines.',
     design_style: 'Modern, Clean, Professional',
@@ -17,15 +26,17 @@ const mockCases = [
     testimonial: 'The Wedesign team delivered exceptional work that perfectly captured our brand vision. The process was smooth and the final result exceeded our expectations. Highly recommended!',
     rating: 5,
     is_featured: true,
-    tags: ['branding', 'logo-design', 'saas', 'technology', 'premium']
+    tags: ['branding', 'logo-design', 'saas', 'technology', 'premium'],
+    image_url: '/cases/techstart.jpg',
+    project_url: 'https://techstart.com'
   },
   {
     id: '2',
-    client_name: 'GreenLeaf Organics',
+    client_name: 'Sarah Chen',
     company: 'GreenLeaf Organics',
     industry: 'Health & Wellness',
     project_type: 'Logo & Packaging Design',
-    package: 'Professional',
+    package: 'professional' as const,
     amount: 59900,
     description: 'Logo design and packaging system for an organic health food company. Focus on natural, earthy aesthetics that communicate purity and quality.',
     design_style: 'Organic, Natural, Minimalist',
@@ -34,176 +45,321 @@ const mockCases = [
     testimonial: 'The design perfectly represents our commitment to natural, organic products. Sales increased by 30% after rebranding!',
     rating: 5,
     is_featured: true,
-    tags: ['packaging', 'organic', 'health', 'food', 'professional']
+    tags: ['packaging', 'organic', 'health', 'food', 'professional'],
+    image_url: '/cases/greenleaf.jpg',
+    project_url: 'https://greenleaforganics.com'
   },
   {
     id: '3',
-    client_name: 'FinTech Solutions',
+    client_name: 'Michael Rodriguez',
     company: 'FinTech Solutions',
     industry: 'Finance / FinTech',
     project_type: 'Corporate Identity',
-    package: 'Basic',
+    package: 'basic' as const,
     amount: 29900,
     description: 'Corporate identity design for a financial technology startup. Clean, trustworthy design that communicates security and innovation.',
     design_style: 'Corporate, Trustworthy, Innovative',
     color_palette: 'Blue, Gray, White, Accent colors',
     deliverables: ['Logo Design', 'Business Cards', 'Email Signature', 'Document Template'],
-    testimonial: 'Fast delivery and professional results. Exactly what we needed for our investor pitch.',
+    testimonial: 'Professional service with excellent attention to detail. Our new identity has been well received by investors and clients alike.',
     rating: 4,
     is_featured: false,
-    tags: ['corporate', 'fintech', 'finance', 'basic']
+    tags: ['corporate', 'finance', 'startup', 'basic'],
+    image_url: '/cases/fintech.jpg',
+    project_url: 'https://fintechsolutions.com'
   },
   {
     id: '4',
-    client_name: 'Creative Studio',
-    company: 'Creative Studio',
+    client_name: 'Emma Wilson',
+    company: 'Creative Lab Studios',
     industry: 'Creative Agency',
-    project_type: 'Website Redesign',
-    package: 'Professional',
+    project_type: 'Website & UI/UX Design',
+    package: 'professional' as const,
     amount: 59900,
-    description: 'Complete website redesign with modern UI/UX principles. Focus on portfolio presentation and client conversion.',
+    description: 'Complete website redesign with modern UI/UX for a creative agency. Focus on portfolio showcase and client acquisition.',
     design_style: 'Creative, Bold, Interactive',
-    color_palette: 'Dark theme, Neon accents, Gradients',
-    deliverables: ['Website Design', 'UI/UX', 'Mobile Responsive', 'CMS Integration'],
-    testimonial: 'Our website traffic increased by 150% and client inquiries tripled. Amazing work!',
+    color_palette: 'Vibrant colors, Dark mode, Animations',
+    deliverables: ['Website Design', 'UI/UX Design', 'Mobile Responsive', 'CMS Integration'],
+    testimonial: 'The new website has doubled our lead generation. The design is both beautiful and functional.',
     rating: 5,
-    is_featured: false,
-    tags: ['web-design', 'ui-ux', 'creative', 'portfolio']
+    is_featured: true,
+    tags: ['web-design', 'ui-ux', 'creative', 'agency', 'professional'],
+    image_url: '/cases/creative-lab.jpg',
+    project_url: 'https://creativelabstudios.com'
   },
   {
     id: '5',
-    client_name: 'Local Restaurant',
-    company: 'Bella Vista Restaurant',
-    industry: 'Food & Beverage',
-    project_type: 'Menu & Branding',
-    package: 'Basic',
-    amount: 29900,
-    description: 'Complete restaurant branding including menu design, logo, and promotional materials.',
-    design_style: 'Elegant, Traditional, Warm',
-    color_palette: 'Gold, Burgundy, Cream',
-    deliverables: ['Logo Design', 'Menu Design', 'Business Cards', 'Social Media Graphics'],
-    testimonial: 'Customers love the new look! Our brand now truly reflects the quality of our food.',
-    rating: 4,
+    client_name: 'David Kim',
+    company: 'Urban Fitness',
+    industry: 'Fitness & Wellness',
+    project_type: 'Brand Identity & Marketing',
+    package: 'premium' as const,
+    amount: 99900,
+    description: 'Complete brand identity and marketing materials for a premium fitness studio chain. Modern, energetic design that appeals to urban professionals.',
+    design_style: 'Energetic, Modern, Premium',
+    color_palette: 'Black, Gold, Neon accents',
+    deliverables: ['Logo Design', 'Brand Guidelines', 'Marketing Materials', 'Social Media Kit', 'Apparel Design', 'Signage'],
+    testimonial: 'Outstanding work that perfectly captures our brand ethos. Membership signups increased by 45% after launch.',
+    rating: 5,
     is_featured: false,
-    tags: ['restaurant', 'menu-design', 'hospitality', 'basic']
+    tags: ['fitness', 'premium', 'marketing', 'branding'],
+    image_url: '/cases/urban-fitness.jpg',
+    project_url: 'https://urbanfitness.com'
   },
   {
     id: '6',
-    client_name: 'Fitness App',
-    company: 'FitTrack Pro',
-    industry: 'Health & Fitness Tech',
-    project_type: 'App UI/UX Design',
-    package: 'Premium',
-    amount: 99900,
-    description: 'Complete mobile app UI/UX design for a fitness tracking application. Focus on user engagement and retention.',
-    design_style: 'Modern, Energetic, User-friendly',
-    color_palette: 'Orange, Black, White, Gradients',
-    deliverables: ['App UI Design', 'UX Research', 'Prototype', 'Design System', 'Icon Set'],
-    testimonial: 'The design significantly improved user retention. Our app ratings went from 3.8 to 4.7 stars!',
-    rating: 5,
-    is_featured: true,
-    tags: ['app-design', 'ui-ux', 'fitness', 'mobile', 'premium']
+    client_name: 'Lisa Thompson',
+    company: 'EcoPack Solutions',
+    industry: 'Sustainable Packaging',
+    project_type: 'Packaging System Design',
+    package: 'basic' as const,
+    amount: 29900,
+    description: 'Sustainable packaging design system for an eco-friendly packaging company. Focus on recyclable materials and clear messaging.',
+    design_style: 'Sustainable, Clean, Informative',
+    color_palette: 'Green, Brown, Natural tones',
+    deliverables: ['Packaging Design', 'Label System', 'Brand Guidelines', 'Product Photography'],
+    testimonial: 'The designs not only look great but effectively communicate our sustainability mission. Highly recommended for eco-conscious brands.',
+    rating: 4,
+    is_featured: false,
+    tags: ['packaging', 'sustainable', 'eco-friendly', 'basic'],
+    image_url: '/cases/ecopack.jpg',
+    project_url: 'https://ecopacksolutions.com'
   }
 ]
 
+const filters = [
+  { id: 'all', label: 'All Cases' },
+  { id: 'featured', label: 'Featured' },
+  { id: 'premium', label: 'Premium' },
+  { id: 'professional', label: 'Professional' },
+  { id: 'basic', label: 'Basic' },
+  { id: 'branding', label: 'Branding' },
+  { id: 'web-design', label: 'Web Design' },
+  { id: 'packaging', label: 'Packaging' }
+]
+
+const stats = [
+  { icon: Award, value: '200+', label: 'Satisfied Clients' },
+  { icon: TrendingUp, value: '98%', label: 'Success Rate' },
+  { icon: Globe, value: '15+', label: 'Countries Served' },
+  { icon: Users, value: '500+', label: 'Projects Completed' }
+]
+
 export default function CasesPage() {
-  const featuredCases = mockCases.filter(caseData => caseData.is_featured)
-  const otherCases = mockCases.filter(caseData => !caseData.is_featured)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeFilter, setActiveFilter] = useState('all')
+
+  const filteredCases = useMemo(() => {
+    return mockCases.filter(caseItem => {
+      // Search filter
+      const matchesSearch = searchQuery === '' || 
+        caseItem.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        caseItem.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        caseItem.project_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        caseItem.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+
+      // Category filter
+      const matchesFilter = activeFilter === 'all' || 
+        (activeFilter === 'featured' && caseItem.is_featured) ||
+        (activeFilter === 'premium' && caseItem.package === 'premium') ||
+        (activeFilter === 'professional' && caseItem.package === 'professional') ||
+        (activeFilter === 'basic' && caseItem.package === 'basic') ||
+        caseItem.tags.includes(activeFilter)
+
+      return matchesSearch && matchesFilter
+    })
+  }, [searchQuery, activeFilter])
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  }
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-5xl font-bold mb-6">Success Stories</h1>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">
-              See how we've helped businesses transform their brands with professional design.
-              Real projects, real results.
-            </p>
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-primary/5 via-transparent to-transparent rounded-full translate-x-1/4 translate-y-1/4" />
+        </div>
+
+        <div className="container">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={staggerChildren}
+            className="text-center"
+          >
+            <motion.div variants={fadeInUp}>
+              <Badge variant="default" className="mb-6 px-4 py-1.5">
+                <Award className="h-4 w-4 mr-1" />
+                Portfolio Showcase
+              </Badge>
+            </motion.div>
+
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading">
+              Our <span className="primary-gradient-text">Design Portfolio</span>
+            </motion.h1>
+
+            <motion.p variants={fadeInUp} className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
+              Explore real projects that showcase our design expertise and client success stories.
+              Each case study demonstrates our commitment to quality and results.
+            </motion.p>
+
+            {/* Stats */}
+            <motion.div variants={fadeInUp}>
+              <Card className="max-w-4xl mx-auto border-primary/20 bg-gradient-to-br from-card to-card/50">
+                <CardContent className="p-8">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    {stats.map((stat, index) => (
+                      <div key={index} className="text-center">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center mb-4 mx-auto">
+                          <stat.icon className="h-8 w-8 text-primary" />
+                        </div>
+                        <div className="text-3xl font-bold primary-gradient-text mb-1">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm text-muted-foreground">{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Filters & Search */}
+      <section className="py-8 bg-card/50 backdrop-blur-sm sticky top-16 z-40 border-y">
+        <div className="container">
+          <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
+            {/* Search */}
+            <div className="w-full md:w-auto">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search cases by company, industry, or tags..."
+                  className="pl-10 w-full md:w-96"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex flex-wrap gap-2">
+              {filters.map((filter) => (
+                <Button
+                  key={filter.id}
+                  variant={activeFilter === filter.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setActiveFilter(filter.id)}
+                  className={activeFilter === filter.id ? "primary-gradient-bg border-transparent" : ""}
+                >
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-blue-600">50+</div>
-              <div className="text-gray-600">Projects Completed</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-blue-600">4.9</div>
-              <div className="text-gray-600">Average Rating</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-blue-600">$500K+</div>
-              <div className="text-gray-600">Revenue Generated</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-blue-600">100%</div>
-              <div className="text-gray-600">Client Satisfaction</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Cases */}
+      {/* Cases Grid */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Case Studies</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Our most impactful projects that demonstrate the power of great design.
-            </p>
+        <div className="container">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold font-heading">
+                {activeFilter === 'all' ? 'All Case Studies' : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Cases`}
+              </h2>
+              <p className="text-muted-foreground">
+                Showing {filteredCases.length} of {mockCases.length} cases
+              </p>
+            </div>
+            
+            <Button variant="outline" size="sm">
+              <Filter className="h-4 w-4 mr-2" />
+              Sort By: Featured
+            </Button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {featuredCases.map((caseData) => (
-              <CaseStudyCard key={caseData.id} caseData={caseData} />
-            ))}
-          </div>
-
-          {/* All Cases */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">All Projects</h2>
-            <p className="text-gray-600">Browse our complete portfolio of successful design projects.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {otherCases.map((caseData) => (
-              <CaseStudyCard key={caseData.id} caseData={caseData} />
-            ))}
-          </div>
+          {filteredCases.length === 0 ? (
+            <Card className="text-center py-12">
+              <CardContent>
+                <div className="text-4xl mb-4">🔍</div>
+                <h3 className="text-xl font-bold mb-2">No cases found</h3>
+                <p className="text-muted-foreground mb-6">
+                  Try adjusting your search or filter criteria
+                </p>
+                <Button 
+                  variant="outline"
+                  onClick={() => {
+                    setSearchQuery('')
+                    setActiveFilter('all')
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <motion.div
+              initial="initial"
+              animate="animate"
+              variants={staggerChildren}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {filteredCases.map((caseItem, index) => (
+                <CaseStudyCard 
+                  key={caseItem.id} 
+                  caseData={caseItem} 
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          )}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Ready to Start Your Project?</h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Join our satisfied clients and transform your brand today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/"
-              className="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition"
-            >
-              View Pricing Plans
-            </a>
-            <a
-              href="https://calendly.com/wedesign/consultation"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition"
-            >
-              Book Free Consultation
-            </a>
-          </div>
+      <section className="py-20">
+        <div className="container">
+          <Card className="max-w-4xl mx-auto border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10">
+            <CardContent className="p-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">
+                Ready to Start Your Project?
+              </h2>
+              <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+                Let&apos;s create something amazing together. Our team is ready to bring your vision to life.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button variant="gradient" size="lg" asChild>
+                  <a href="/#pricing">
+                    View Pricing & Plans
+                  </a>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <a href="mailto:contact@wedesign.design">
+                    Schedule Consultation
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
-    </main>
+    </div>
   )
 }
