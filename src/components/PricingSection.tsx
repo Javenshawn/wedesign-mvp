@@ -31,7 +31,31 @@ export default function PricingSection() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            ...formData,
+            // 项目信息 - 映射到API期望的字段名
+            projectName: formData.projectName,
+            projectDescription: formData.projectDescription,
+            projectType: formData.projectType,
+            deadline: formData.deadline,
+            
+            // 品牌信息
+            companyName: formData.companyName,
+            industry: formData.industry,
+            targetAudience: formData.targetAudience,
+            competitors: formData.competitors,
+            
+            // 设计偏好
+            designStyle: formData.designStyle,
+            colorPreferences: formData.colorPreferences,
+            inspirationLinks: formData.inspirationLinks,
+            
+            // 联系信息
+            contactName: formData.contactName,
+            email: formData.email,
+            phone: formData.phone,
+            wechat: formData.wechat,
+            
+            // 订单信息
+            selectedPlan: formData.selectedPlan,
             amount: formData.selectedPlan === 'basic' ? 29900 : formData.selectedPlan === 'professional' ? 59900 : 99900,
             status: 'pending'
           })

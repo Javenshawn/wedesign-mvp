@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "health": "node health-check-infrastructure.js && node health-check-services.js && node health-check-functionality.js",
+    "deploy": "npm run health && vercel --prod"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",
