@@ -9,41 +9,15 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "https://www.wedesign.design",
-      "permanent": true
-    },
-    {
-      "source": "/",
-      "destination": "https://www.wedesign.design",
-      "permanent": true
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
-      ]
+      "dest": "/$1",
+      "headers": {
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
+      }
     }
   ],
   "env": {
-    "NEXT_PUBLIC_SITE_URL": "https://www.wedesign.design"
+    "NEXT_PUBLIC_SITE_URL": "https://wedesign.design"
   }
 }
