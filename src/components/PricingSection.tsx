@@ -23,18 +23,26 @@ export default function PricingSection() {
   const handleOrderSubmit = async (formData: any) => {
     setLoading(true)
     try {
-      // 首先保存订单信息到数据库（如果需要）
-      const orderResponse = await fetch('/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          amount: formData.selectedPlan === 'basic' ? 29900 : formData.selectedPlan === 'professional' ? 59900 : 99900,
-          status: 'pending'
+      // 首先尝试保存订单信息到数据库
+      try {
+        const orderResponse = await fetch('/api/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...formData,
+            amount: formData.selectedPlan === 'basic' ? 29900 : formData.selectedPlan === 'professional' ? 59900 : 99900,
+            status: 'pending'
+          })
         })
-      })
+
+        const orderResult = await orderResponse.json()
+        console.log('订单保存结果:', orderResult)
+      } catch (orderError) {
+        console.warn('订单保存失败，继续支付流程:', orderError)
+        // 即使订单保存失败，也继续支付流程
+      }
 
       // 然后跳转到支付
       const checkoutResponse = await fetch('/api/checkout', {
@@ -48,7 +56,9 @@ export default function PricingSection() {
           metadata: {
             project_name: formData.projectName,
             contact_name: formData.contactName,
-            phone: formData.phone
+            phone: formData.phone,
+            wechat: formData.wechat,
+            project_type: formData.projectType
           }
         })
       })
