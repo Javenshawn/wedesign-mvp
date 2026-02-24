@@ -1,123 +1,132 @@
 'use client'
 
+import { useState } from 'react'
+
 export default function Home() {
-  const handleCheckout = async (plan: string) => {
+  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('')
+
+  const handleBuy = async () => {
+    if (!email) {
+      alert('Please enter your email')
+      return
+    }
+
+    setLoading(true)
     try {
-      // 获取用户邮箱（简单实现）
-      const email = prompt('Please enter your email for order confirmation:')
-      if (!email) {
-        alert('Email is required for order confirmation')
-        return
-      }
-
-      // 验证邮箱格式
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address')
-        return
-      }
-
-      const response = await fetch('/api/create-checkout', {
+      const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ plan, email }),
+        body: JSON.stringify({
+          price_id: 'price_1T4CWWCY5vZ28ogKbNxKWfaf', // 基础套餐 price_id
+          email: email
+        })
       })
 
       const data = await response.json()
       
-      if (!response.ok) {
-        throw new Error(data.error || 'Payment system error')
-      }
-      
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('Error creating checkout session')
+        alert('Checkout failed: ' + (data.error || 'Unknown error'))
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Checkout error:', error)
-      alert(error.message || 'Payment system error')
+      alert('Checkout failed. Please try again.')
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-7xl mx-auto">
-        <header className="mb-12">
-          <h1 className="text-4xl font-bold text-gray-900">Wedesign</h1>
-          <p className="text-gray-600 mt-2">Professional Design Services</p>
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <header className="text-center mb-12 pt-12">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Professional Design Services
+          </h1>
+          <p className="text-xl text-gray-600">
+            Get your brand designed by professionals. Simple, fast, effective.
+          </p>
         </header>
 
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Our Packages</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Basic Package */}
-            <div className="border rounded-lg p-6 shadow-sm">
-              <h3 className="text-2xl font-bold mb-2">Basic Package</h3>
-              <p className="text-4xl font-bold mb-4">$299</p>
-              <ul className="space-y-2 mb-6">
-                <li>• Basic logo design</li>
-                <li>• 3 initial concepts</li>
-                <li>• 2 revision rounds</li>
-                <li>• Standard file formats</li>
-                <li>• 7-10 business days</li>
-              </ul>
-              <button 
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-                onClick={() => handleCheckout('basic')}
-              >
-                Choose Basic
-              </button>
-            </div>
+        {/* Product Card */}
+        <div className="bg-white rounded-2xl shadow-2xl p-8 mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Basic Design Package</h2>
+            <div className="text-5xl font-bold text-blue-600 mb-4">$299</div>
+            <p className="text-gray-600 text-lg">
+              Perfect for startups and small businesses
+            </p>
+          </div>
 
-            {/* Standard Package */}
-            <div className="border rounded-lg p-6 shadow-lg border-blue-500 relative">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                Most Popular
+          <div className="space-y-4 mb-8">
+            <div className="flex items-center">
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-green-600 text-sm">✓</span>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Standard Package</h3>
-              <p className="text-4xl font-bold mb-4">$599</p>
-              <ul className="space-y-2 mb-6">
-                <li>• Complete logo design</li>
-                <li>• 5 initial concepts</li>
-                <li>• 4 revision rounds</li>
-                <li>• Source files (AI, EPS, SVG)</li>
-                <li>• 5-7 business days</li>
-              </ul>
-              <button 
-                className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
-                onClick={() => handleCheckout('standard')}
-              >
-                Choose Standard
-              </button>
+              <span>Logo Design (3 concepts)</span>
             </div>
-
-            {/* Premium Package */}
-            <div className="border rounded-lg p-6 shadow-sm">
-              <h3 className="text-2xl font-bold mb-2">Premium Package</h3>
-              <p className="text-4xl font-bold mb-4">$999</p>
-              <ul className="space-y-2 mb-6">
-                <li>• Brand system design</li>
-                <li>• 8 initial concepts</li>
-                <li>• Unlimited revisions</li>
-                <li>• All source files</li>
-                <li>• 3-5 business days</li>
-              </ul>
-              <button 
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-                onClick={() => handleCheckout('premium')}
-              >
-                Choose Premium
-              </button>
+            <div className="flex items-center">
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-green-600 text-sm">✓</span>
+              </div>
+              <span>2 Revisions</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-green-600 text-sm">✓</span>
+              </div>
+              <span>Source Files (AI, PDF, PNG)</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-green-600 text-sm">✓</span>
+              </div>
+              <span>7-Day Delivery</span>
             </div>
           </div>
-        </section>
 
-        <footer className="mt-16 pt-8 border-t">
-          <p className="text-gray-600">© 2024 Wedesign. All rights reserved.</p>
-        </footer>
+          {/* Email Input */}
+          <div className="mb-6">
+            <label className="block text-gray-700 mb-2 font-medium">
+              Your Email Address
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+            />
+          </div>
+
+          {/* Buy Button */}
+          <button
+            onClick={handleBuy}
+            disabled={loading}
+            className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xl font-bold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Processing...' : 'Buy Now - $299'}
+          </button>
+
+          <p className="text-center text-gray-500 text-sm mt-4">
+            Secure payment powered by Stripe
+          </p>
+        </div>
+
+        {/* Admin Link */}
+        <div className="text-center">
+          <a 
+            href="/admin" 
+            className="inline-block px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
+          >
+            View Orders (Admin)
+          </a>
+        </div>
       </div>
     </main>
   )

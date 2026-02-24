@@ -1,45 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
 
-// 价格映射（单位：分）
-const PRICE_MAP: Record<string, number> = {
-  basic: 29900,    // $299.00
-  standard: 59900, // $599.00
-  premium: 99900,  // $999.00
-}
-
-// 产品名称映射
-const PRODUCT_NAME_MAP: Record<string, string> = {
-  basic: 'Wedesign Basic Package',
-  standard: 'Wedesign Standard Package',
-  premium: 'Wedesign Premium Package',
-}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2024-06-20'
+})
 
 export async function POST(request: NextRequest) {
   try {
-    const { plan } = await request.json()
-    
-    if (!plan || !PRICE_MAP[plan]) {
+    const { price_id, email } = await request.json()
+
+    if (!price_id || !email) {
       return NextResponse.json(
-        { error: 'Invalid plan selection' },
+        { error: 'Missing price_id or email' },
         { status: 400 }
       )
     }
 
-    // 这里需要师傅提供Stripe密钥和price_id
-    // 暂时返回模拟数据
-    const mockCheckoutUrl = `https://checkout.stripe.com/pay/test_${plan}`
-    
-    return NextResponse.json({
-      url: mockCheckoutUrl,
-      plan,
-      amount: PRICE_MAP[plan],
-      message: 'Checkout session created (mock)'
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: price_id,
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/admin`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}`,
+      customer_email: email,
+      metadata: {
+        email: email
+      }
     })
 
-  } catch (error) {
-    console.error('Checkout API error:', error)
+    return NextResponse.json({ url: session.url })
+  } catch (error: any) {
+    console.error('Stripe checkout error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: error.message || 'Checkout failed' },
       { status: 500 }
     )
   }
