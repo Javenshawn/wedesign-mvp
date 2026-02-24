@@ -1,3 +1,5 @@
+'use client'
+
 interface CaseStudyCardProps {
   caseData: {
     id: string

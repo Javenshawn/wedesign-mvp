@@ -36,6 +36,8 @@ const contactInfo = [
   { icon: MapPin, text: '123 Design Street, Creative City' },
 ]
 
+'use client'
+
 export default function Footer() {
   return (
     <footer className="border-t bg-card">

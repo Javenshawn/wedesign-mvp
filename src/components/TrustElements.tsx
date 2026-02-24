@@ -1,3 +1,5 @@
+'use client'
+
 export default function TrustElements() {
   return (
     <section className="py-16 bg-white">
