@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react'
 import { Button } from './ui/Button'
@@ -35,8 +37,6 @@ const contactInfo = [
   { icon: Phone, text: '+1 (555) 123-4567' },
   { icon: MapPin, text: '123 Design Street, Creative City' },
 ]
-
-'use client'
 
 export default function Footer() {
   return (
