@@ -11,6 +11,7 @@
     "deploy": "npm run health && vercel --prod"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.15.8",
     "@supabase/supabase-js": "^2.97.0",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/typography": "^0.5.19",
