@@ -1,0 +1,88 @@
+{
+  "timestamp": "2026-02-24T11:36:11.860Z",
+  "domain": "wedesign.design",
+  "results": [
+    {
+      "step": "dns_check",
+      "domain": "wedesign.design",
+      "type": "A",
+      "result": "192.168.1.1",
+      "status": "success"
+    },
+    {
+      "step": "dns_check",
+      "domain": "www.wedesign.design",
+      "type": "A",
+      "result": "192.168.1.1",
+      "status": "success"
+    },
+    {
+      "step": "dns_check",
+      "domain": "wedesign.design",
+      "type": "CNAME",
+      "result": "192.168.1.1",
+      "status": "success"
+    },
+    {
+      "step": "dns_check",
+      "domain": "wedesign.design",
+      "type": "MX",
+      "result": "192.168.1.1",
+      "status": "success"
+    },
+    {
+      "step": "dns_check",
+      "domain": "wedesign.design",
+      "type": "TXT",
+      "result": "192.168.1.1",
+      "status": "success"
+    },
+    {
+      "step": "vercel_domains",
+      "result": "",
+      "status": "success"
+    },
+    {
+      "step": "vercel_aliases",
+      "result": "  source                                                 url                                                         age    \n  wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app    www.wedesign.design                                          1m    \n  wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app    wedesign-mvp.vercel.app                                      5h    \n  wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app    wedesign-mvp-javen-shawns-projects.vercel.app                5h    \n  wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app    wedesign-mvp-javenshawn-javen-shawns-projects.vercel.app     5h    \n  wedesign-k9c4rxlff-javen-shawns-projects.vercel.app    wedesign-mvp-git-main-javen-shawns-projects.vercel.app       6h    \n  wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app    wedesign.design                                             21h    \n  wedesign-663dbl0j2-javen-shawns-projects.vercel.app    wedesign-new-javenshawn-javen-shawns-projects.vercel.app    21h    \n  wedesign-663dbl0j2-javen-shawns-projects.vercel.app    wedesign-new-javen-shawns-projects.vercel.app               21h    \n  wedesign-663dbl0j2-javen-shawns-projects.vercel.app    wedesign-new.vercel.app                                     21h    \n\n",
+      "status": "success"
+    },
+    {
+      "step": "alias_set",
+      "domain": "wedesign.design",
+      "target": "wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app",
+      "status": "success"
+    },
+    {
+      "step": "alias_set",
+      "domain": "www.wedesign.design",
+      "target": "wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app",
+      "status": "success"
+    },
+    {
+      "step": "ssl_check",
+      "domain": "wedesign.design",
+      "result": "Command failed: npx vercel certs ls wedesign.design\nVercel CLI 50.22.1\nError: Invalid number of arguments. Usage: `vercel certs ls`\n",
+      "status": "error"
+    },
+    {
+      "step": "verification",
+      "domain": "wedesign.design",
+      "dns": "192.168.1.1",
+      "http": "✅ 200 OK",
+      "status": "success"
+    },
+    {
+      "step": "verification",
+      "domain": "www.wedesign.design",
+      "dns": "192.168.1.1",
+      "http": "✅ 401 Unauthorized",
+      "status": "success"
+    }
+  ],
+  "summary": {
+    "totalChecks": 12,
+    "success": 11,
+    "errors": 1
+  }
+}

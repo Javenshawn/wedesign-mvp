@@ -1,0 +1,21 @@
+{
+  "products": [
+    {
+      "id": "price_1T4EQICY5vZ28ogKIt1fBRwd",
+      "name": "Basic Plan",
+      "price": "$299"
+    },
+    {
+      "id": "price_1T4ERcCY5vZ28ogKeAmpEtdq",
+      "name": "Professional Plan",
+      "price": "$599"
+    },
+    {
+      "id": "price_1T4ESpCY5vZ28ogKit9ENo2g",
+      "name": "Premium Plan",
+      "price": "$999"
+    }
+  ],
+  "timestamp": "2026-02-24T12-47-11-726Z",
+  "status": "configured"
+}

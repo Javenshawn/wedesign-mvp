@@ -1,0 +1,77 @@
+Vercel Build Log - Deployment: dpl_HP4xLyMAVs3zPsiwHUFWeFuBZSiD
+Deployment URL: https://wedesign-77ucc35fo-javen-shawns-projects.vercel.app
+Aliased URL: https://wedesign.design
+Build Time: 2026-02-25 08:17:43 GMT+7
+
+=== BUILD PROCESS ===
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Downloading 55 deployment files...
+Building: Restored build cache from previous deployment (4TUYhP3uXRziwBG4TaZnYBjyi8rA)
+Building: Running "vercel build"
+Building: Vercel CLI 50.23.0
+Building: WARN! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
+Building: Installing dependencies...
+Building: up to date in 615ms
+Building: 43 packages are looking for funding
+Building: run `npm fund` for details
+Building: Detected Next.js version: 14.2.18
+Building: Running "npm run build"
+Building: > wedesign-mvp@0.1.0 build
+Building: > next build
+Building: ▲ Next.js 14.2.18
+Building: - Environments: .env.production
+Building: Creating an optimized production build ...
+Building: ✓ Compiled successfully
+Building: Linting and checking validity of types ...
+Building: Collecting page data ...
+Building: Generating static pages (0/9) ...
+Building: Generating static pages (2/9)
+Building: Generating static pages (4/9)
+Building: Generating static pages (6/9)
+Building: ✓ Generating static pages (9/9)
+Building: Finalizing page optimization ...
+Building: Collecting build traces ...
+
+=== BUILD OUTPUT ===
+Building: Route (app)                              Size     First Load JS
+Building: ┌ ○ /                                    13.7 kB         101 kB
+Building: ├ ○ /_not-found                          873 B            88 kB
+Building: ├ ƒ /api/checkout                        0 B                0 B
+Building: ├ ƒ /api/design-request                  0 B                0 B
+Building: ├ ƒ /api/health                          0 B                0 B
+Building: ├ ƒ /api/orders                          0 B                0 B
+Building: └ ƒ /api/webhook                         0 B                0 B
+Building: + First Load JS shared by all            87.1 kB
+Building: ├ chunks/117-d285d4944d01b705.js       31.6 kB
+Building: ├ chunks/fd9d1056-0e9509269010eaed.js  53.6 kB
+Building: └ other shared chunks (total)          1.86 kB
+Building: ○  (Static)   prerendered as static content
+Building: ƒ  (Dynamic)  server-rendered on demand
+Building: Traced Next.js server files in: 30.417ms
+Building: Created all serverless functions in: 93.999ms
+Building: Collected static files (public/, static/, .next/static): 5.834ms
+Building: Build Completed in /vercel/output [23s]
+Building: Deploying outputs...
+
+=== DEPLOYMENT COMPLETE ===
+Production: https://wedesign-77ucc35fo-javen-shawns-projects.vercel.app [35s]
+Completing...
+Aliased: https://wedesign.design [35s]
+
+=== PROJECT SETTINGS UPDATED ===
+- Framework: Changed from "vite" to "nextjs"
+- Node Version: Changed from "24.x" to "18.x"
+- Build Command: Default (next build)
+- Output Directory: Empty (not "dist")
+- Project successfully rebuilt and redeployed
+
+=== VERIFICATION ===
+✅ Website accessible: https://wedesign.design
+✅ HTML rendered correctly (27,699 bytes)
+✅ CSS loaded: /_next/static/css/4c40e31dab0a91aa.css
+✅ JavaScript loaded: /_next/static/chunks/
+✅ Title correct: "Wedesign - Professional Design Services"
+✅ Next.js detected: 14.2.18
+✅ Build successful: 23 seconds

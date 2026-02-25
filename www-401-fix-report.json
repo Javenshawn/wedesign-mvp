@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-02-24T11:54:37.092Z",
+  "domain": "www.wedesign.design",
+  "problem": "401 Unauthorized",
+  "steps": [
+    {
+      "step": "diagnosis",
+      "domain": "www.wedesign.design",
+      "status": 401,
+      "message": "Unauthorized",
+      "responseTime": "244ms",
+      "server": "Vercel",
+      "title": "Authentication Required",
+      "success": false
+    },
+    {
+      "step": "vercel_check",
+      "projectInfo": "",
+      "domains": "",
+      "wwwAlias": "  wedesign-l3rnq7a7o-javen-shawns-projects.vercel.app    www.wedesign.design                                         19m    "
+    },
+    {
+      "step": "alias_fix",
+      "action": "set_alias",
+      "success": true,
+      "output": ""
+    },
+    {
+      "step": "deploy_prep",
+      "action": "create_health_check",
+      "success": true,
+      "timestamp": "2026-02-24T11:54:26.620Z"
+    },
+    {
+      "step": "vercel_json",
+      "action": "update_config",
+      "success": true
+    },
+    {
+      "step": "verification",
+      "domain": "www.wedesign.design",
+      "status": 401,
+      "message": "Unauthorized",
+      "responseTime": "192ms",
+      "server": "Vercel",
+      "title": "Authentication Required",
+      "success": false,
+      "fixed": false
+    }
+  ],
+  "summary": {
+    "totalSteps": 6,
+    "successful": 4,
+    "failed": 2
+  },
+  "finalStatus": "NOT_FIXED",
+  "recommendations": [
+    "立即使用 wedesign.design 作为主域名",
+    "等待24小时让DNS完全传播",
+    "检查GoDaddy DNS配置是否正确",
+    "如果急需www域名，考虑使用Cloudflare代理"
+  ]
+}

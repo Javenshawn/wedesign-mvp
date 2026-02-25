@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-02-24T12:31:30.987Z",
+  "summary": {
+    "totalServices": 5,
+    "healthy": 3,
+    "warnings": 1,
+    "unhealthy": 1
+  },
+  "services": [
+    {
+      "service": "Vercel",
+      "error": "Command failed: npx vercel list --limit 5\nVercel CLI 50.22.1\nError: unknown or unexpected option: --limit\n",
+      "status": "❌"
+    },
+    {
+      "service": "GitHub",
+      "uncommitted": true,
+      "recentCommits": 5,
+      "hasRemote": true,
+      "status": "⚠️"
+    },
+    {
+      "service": "Supabase",
+      "hasEnv": true,
+      "hasClient": true,
+      "status": "✅"
+    },
+    {
+      "service": "Stripe",
+      "hasEnv": true,
+      "hasCheckout": true,
+      "hasWebhook": true,
+      "hasPricing": true,
+      "productCount": 5,
+      "status": "✅"
+    },
+    {
+      "service": "Environment",
+      "hasEnvFile": true,
+      "envVarCount": 6,
+      "hasNextConfig": true,
+      "status": "✅"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "中",
+      "issue": "有未提交的代码更改",
+      "action": "提交并推送代码到GitHub",
+      "impact": "可能导致部署不一致"
+    }
+  ]
+}

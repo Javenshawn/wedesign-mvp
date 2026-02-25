@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-02-24T12:40:33.280Z",
+  "baseUrl": "https://wedesign.design",
+  "results": [
+    {
+      "name": "支付API (POST)",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": "1078ms",
+      "success": true
+    },
+    {
+      "name": "订单API (POST)",
+      "status": 400,
+      "statusText": "Bad Request",
+      "responseTime": "501ms",
+      "success": false
+    },
+    {
+      "name": "健康检查API (GET)",
+      "status": 404,
+      "statusText": "Not Found",
+      "responseTime": "311ms",
+      "success": false
+    },
+    {
+      "name": "首页 (GET)",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": "144ms",
+      "success": true
+    },
+    {
+      "name": "案例页面 (GET)",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": "654ms",
+      "success": true
+    },
+    {
+      "name": "管理后台 (GET)",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": "79ms",
+      "success": true
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "successful": 4,
+    "failed": 2,
+    "successRate": 67
+  }
+}

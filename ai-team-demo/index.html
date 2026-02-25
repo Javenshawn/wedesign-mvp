@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI团队协同工作演示 - 实时播报系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .stage {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        .stage-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stage-title::before {
+            content: "🎬";
+            font-size: 1.2rem;
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .agent-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .agent-card.active {
+            border-color: #60a5fa;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+        }
+        
+        .agent-card.thinking {
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+        
+        .agent-card.idle {
+            border-color: #94a3b8;
+        }
+        
+        .agent-avatar {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .agent-status {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #0f172a;
+        }
+        
+        .status-working { background: #10b981; }
+        .status-thinking { background: #f59e0b; }
+        .status-idle { background: #6b7280; }
+        
+        .agent-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .agent-role {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        
+        .agent-task {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .live-feed {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        .feed-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feed-title::before {
+            content: "📡";
+            font-size: 1.2rem;
+        }
+        
+        .feed-container {
+            height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .feed-item {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #60a5fa;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .feed-item.thinking {
+            border-left-color: #fbbf24;
+        }
+        
+        .feed-item.completed {
+            border-left-color: #10b981;
+        }
+        
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .feed-agent {
+            font-weight: bold;
+            color: #60a5fa;
+        }
+        
+        .feed-time {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        
+        .feed-content {
+            color: #e2e8f0;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .feed-emotion {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .emotion-happy { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+        .emotion-focused { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        .emotion-thinking { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+        .emotion-excited { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            color: #e2e8f0;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(51, 65, 85, 0.8);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* 滚动条样式 */
+        .feed-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .feed-container::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 4px;
+        }
+        
+        .feed-container::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        
+        .feed-container::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .agents-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI团队协同工作系统</h1>
+            <div class="subtitle">实时展示AI代理协同工作状态与进度播报</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-tasks">0</div>
+                    <div class="stat-label">今日处理任务</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="active-agents">0</div>
+                    <div class="stat-label">活跃代理</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="signals-today">0</div>
+                    <div class="stat-label">今日信号</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="stage">
+                <div class="stage-title">工作舞台 - 实时协同</div>
+                <div class="agents-grid" id="agents-container">
+                    <!-- 代理卡片将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <div class="live-feed">
+                <div class="feed-title">实时工作播报</div>
+                <div class="feed-container" id="feed-container">
+                    <!-- 实时播报内容将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn-primary" onclick="startSimulation()">▶️ 开始模拟</button>
+            <button class="btn-secondary" onclick="pauseSimulation()">⏸️ 暂停模拟</button>
+            <button class="btn-secondary" onclick="resetSimulation()">🔄 重置模拟</button>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+</body>
+</html>

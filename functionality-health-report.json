@@ -1,0 +1,247 @@
+{
+  "timestamp": "2026-02-24T12:33:02.665Z",
+  "summary": {
+    "totalChecks": 21,
+    "successful": 10,
+    "warnings": 0,
+    "failed": 4,
+    "byType": {
+      "page": {
+        "total": 4,
+        "successful": 0,
+        "failed": 0
+      },
+      "component": {
+        "total": 2,
+        "successful": 2,
+        "failed": 0
+      },
+      "api": {
+        "total": 3,
+        "successful": 0,
+        "failed": 3
+      },
+      "database": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+      },
+      "form": {
+        "total": 1,
+        "successful": 0,
+        "failed": 0
+      },
+      "case_study": {
+        "total": 2,
+        "successful": 2,
+        "failed": 0
+      },
+      "admin": {
+        "total": 2,
+        "successful": 0,
+        "failed": 0
+      },
+      "admin_feature": {
+        "total": 3,
+        "successful": 3,
+        "failed": 0
+      },
+      "responsive": {
+        "total": 3,
+        "successful": 2,
+        "failed": 1
+      }
+    }
+  },
+  "detailedResults": [
+    {
+      "page": "首页",
+      "path": "/",
+      "status": 200,
+      "statusText": "OK",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "type": "page",
+      "critical": true
+    },
+    {
+      "page": "案例页面",
+      "path": "/cases",
+      "status": 200,
+      "statusText": "OK",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "type": "page",
+      "critical": true
+    },
+    {
+      "page": "管理后台",
+      "path": "/admin",
+      "status": 200,
+      "statusText": "OK",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "type": "page",
+      "critical": false
+    },
+    {
+      "page": "设置页面",
+      "path": "/admin/setup",
+      "status": 200,
+      "statusText": "OK",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "type": "page",
+      "critical": false
+    },
+    {
+      "component": "定价组件",
+      "exists": true,
+      "status": "✅",
+      "type": "component"
+    },
+    {
+      "component": "订单表单",
+      "exists": true,
+      "status": "✅",
+      "type": "component"
+    },
+    {
+      "api": "支付API",
+      "path": "/api/checkout",
+      "status": 400,
+      "statusText": "Bad Request",
+      "success": false,
+      "type": "api"
+    },
+    {
+      "api": "Webhook API",
+      "path": "/api/webhook",
+      "status": 400,
+      "statusText": "Bad Request",
+      "success": false,
+      "type": "api"
+    },
+    {
+      "api": "订单API",
+      "path": "/api/orders",
+      "status": 400,
+      "statusText": "Bad Request",
+      "success": false,
+      "type": "api"
+    },
+    {
+      "system": "数据库",
+      "hasSQL": true,
+      "status": "✅",
+      "type": "database"
+    },
+    {
+      "system": "订单表单",
+      "success": true,
+      "message": "表单结构完整",
+      "details": {
+        "hasFields": true,
+        "hasValidation": true,
+        "hasSubmit": true
+      },
+      "type": "form"
+    },
+    {
+      "component": "案例卡片组件",
+      "exists": true,
+      "status": "✅",
+      "type": "case_study"
+    },
+    {
+      "component": "案例页面",
+      "exists": true,
+      "status": "✅",
+      "type": "case_study"
+    },
+    {
+      "page": "主管理页面",
+      "path": "/admin",
+      "status": 200,
+      "statusText": "OK",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "type": "admin"
+    },
+    {
+      "page": "设置页面",
+      "path": "/admin/setup",
+      "status": 200,
+      "statusText": "OK",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "type": "admin"
+    },
+    {
+      "feature": "订单查看",
+      "implemented": true,
+      "status": "✅",
+      "type": "admin_feature"
+    },
+    {
+      "feature": "案例管理",
+      "implemented": true,
+      "status": "✅",
+      "type": "admin_feature"
+    },
+    {
+      "feature": "系统设置",
+      "implemented": true,
+      "status": "✅",
+      "type": "admin_feature"
+    },
+    {
+      "feature": "响应式框架",
+      "hasTailwind": true,
+      "status": "✅",
+      "type": "responsive"
+    },
+    {
+      "feature": "全局样式",
+      "hasGlobalCSS": true,
+      "status": "✅",
+      "type": "responsive"
+    },
+    {
+      "feature": "移动端适配",
+      "hasViewport": false,
+      "status": "❌",
+      "type": "responsive"
+    }
+  ],
+  "businessFunctions": [
+    {
+      "name": "网站展示",
+      "available": true
+    },
+    {
+      "name": "支付系统",
+      "available": false
+    },
+    {
+      "name": "订单管理",
+      "available": true
+    },
+    {
+      "name": "案例展示",
+      "available": true
+    },
+    {
+      "name": "管理后台",
+      "available": true
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "高",
+      "issue": "支付API访问失败",
+      "action": "检查Stripe配置和API路由",
+      "impact": "用户无法完成支付"
+    }
+  ]
+}

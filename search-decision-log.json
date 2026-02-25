@@ -1,0 +1,31 @@
+{
+  "totalDecisions": 1,
+  "decisions": [
+    {
+      "query": "深度研究近3个月的Agent进展",
+      "classification": {
+        "type": "complex_research",
+        "strategy": "deep_search",
+        "priority": "high",
+        "depth": "deep",
+        "description": "深度多轮调研"
+      },
+      "strategy": {
+        "maxResults": 5,
+        "timeout": 30000,
+        "language": "en",
+        "tool": "deep_search",
+        "rounds": 3,
+        "sources": [
+          "web",
+          "news",
+          "academic"
+        ],
+        "generateReport": true
+      },
+      "resultsCount": 5,
+      "timestamp": "2026-02-24T08:52:49.373Z"
+    }
+  ],
+  "generatedAt": "2026-02-24T08:52:49.373Z"
+}

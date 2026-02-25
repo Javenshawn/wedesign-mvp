@@ -1,0 +1,171 @@
+{
+  "timestamp": "2026-02-24T12:30:02.181Z",
+  "summary": {
+    "totalChecks": 16,
+    "successful": 11,
+    "warnings": 3,
+    "failed": 5,
+    "domains": {
+      "wedesign.design": {
+        "total": 4,
+        "successful": 3,
+        "failed": 1
+      },
+      "www.wedesign.design": {
+        "total": 4,
+        "successful": 2,
+        "failed": 2
+      },
+      "wedesign-mvp.vercel.app": {
+        "total": 4,
+        "successful": 3,
+        "failed": 1
+      }
+    }
+  },
+  "detailedResults": [
+    {
+      "domain": "wedesign.design",
+      "dns": "失败",
+      "error": "queryA ECONNREFUSED wedesign.design",
+      "status": "❌",
+      "check": "DNS"
+    },
+    {
+      "domain": "www.wedesign.design",
+      "dns": "失败",
+      "error": "queryA ECONNREFUSED www.wedesign.design",
+      "status": "❌",
+      "check": "DNS"
+    },
+    {
+      "domain": "wedesign-mvp.vercel.app",
+      "dns": "失败",
+      "error": "queryA ECONNREFUSED wedesign-mvp.vercel.app",
+      "status": "❌",
+      "check": "DNS"
+    },
+    {
+      "domain": "wedesign.design",
+      "ssl": "✅ 有效",
+      "issuer": "R13",
+      "validFrom": "Feb 24 10:36:02 2026 GMT",
+      "validTo": "May 25 10:36:01 2026 GMT",
+      "check": "SSL"
+    },
+    {
+      "domain": "www.wedesign.design",
+      "ssl": "✅ 有效",
+      "issuer": "R13",
+      "validFrom": "Feb 24 10:36:24 2026 GMT",
+      "validTo": "May 25 10:36:23 2026 GMT",
+      "check": "SSL"
+    },
+    {
+      "domain": "wedesign-mvp.vercel.app",
+      "ssl": "✅ 有效",
+      "issuer": "WR1",
+      "validFrom": "Dec 26 17:44:01 2025 GMT",
+      "validTo": "Mar 26 17:44:00 2026 GMT",
+      "check": "SSL"
+    },
+    {
+      "domain": "wedesign.design",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": "630ms",
+      "server": "Vercel",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "check": "HTTP"
+    },
+    {
+      "domain": "www.wedesign.design",
+      "status": 401,
+      "statusText": "Unauthorized",
+      "responseTime": "291ms",
+      "server": "Vercel",
+      "title": "Authentication Required",
+      "success": false,
+      "check": "HTTP"
+    },
+    {
+      "domain": "wedesign-mvp.vercel.app",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": "524ms",
+      "server": "Vercel",
+      "title": "Wedesign - Professional Design Services",
+      "success": true,
+      "check": "HTTP"
+    },
+    {
+      "endpoint": "首页",
+      "url": "/",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "text/html; charset=utf-8",
+      "success": true,
+      "check": "API"
+    },
+    {
+      "endpoint": "案例页面",
+      "url": "/cases",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "text/html; charset=utf-8",
+      "success": true,
+      "check": "API"
+    },
+    {
+      "domain": "wedesign.design",
+      "ssl": "超时",
+      "status": "⚠️",
+      "check": "SSL"
+    },
+    {
+      "endpoint": "管理后台",
+      "url": "/admin",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "text/html; charset=utf-8",
+      "success": true,
+      "check": "API"
+    },
+    {
+      "domain": "www.wedesign.design",
+      "ssl": "超时",
+      "status": "⚠️",
+      "check": "SSL"
+    },
+    {
+      "endpoint": "支付API",
+      "url": "/api/checkout",
+      "status": 400,
+      "statusText": "Bad Request",
+      "contentType": "application/json",
+      "success": false,
+      "check": "API"
+    },
+    {
+      "domain": "wedesign-mvp.vercel.app",
+      "ssl": "超时",
+      "status": "⚠️",
+      "check": "SSL"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "高",
+      "issue": "www.wedesign.design 返回401错误",
+      "action": "检查Vercel项目域名配置，联系Vercel支持",
+      "impact": "影响用户通过www域名访问"
+    },
+    {
+      "priority": "中",
+      "issue": "API端点访问问题",
+      "action": "检查Next.js API路由配置",
+      "impact": "影响功能完整性"
+    }
+  ]
+}

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择套餐 - Wedesign</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .plans-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .plans-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .plan-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .plan-card.recommended {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        
+        .plan-card.recommended:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .plan-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4ade80;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .plan-header h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        
+        .plan-price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .plan-price span {
+            font-size: 16px;
+            color: #6b7280;
+        }
+        
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+        }
+        
+        .plan-features li:before {
+            content: "✓";
+            color: #4ade80;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .select-plan-btn {
+            width: 100%;
+            padding: 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .select-plan-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .select-plan-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .plan-comparison {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 40px;
+            background: #f9fafb;
+            border-radius: 20px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f3f4f6;
+        }
+        
+        .faq-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background: #f9fafb;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            padding: 20px;
+            display: none;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .plans-container {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+            
+            .plan-card.recommended {
+                transform: none;
+            }
+            
+            .plan-card.recommended:hover {
+                transform: translateY(-10px);
+            }
+            
+            .plan-comparison {
+                padding: 20px;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">Wedesign</a>
+            <div class="nav-menu">
+                <a href="../index.html">首页</a>
+                <a href="plans.html" class="active">套餐</a>
+                <a href="portfolio.html">案例</a>
+                <a href="about.html">关于</a>
+                <a href="contact.html">联系</a>
+            </div>
+            <button class="nav-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- 套餐介绍 -->
+    <section class="plans-hero">
+        <div class="container">
+            <h1>选择适合您的设计套餐</h1>
+            <p>我们提供三种专业套餐，满足不同规模企业的设计需求</p>
+        </div>
+    </section>
+
+    <!-- 套餐卡片 -->
+    <div class="plans-container" id="plans">
+        <!-- 基础套餐 -->
+        <div class="plan-card" data-plan="basic">
+            <div class="plan-header">
+                <h3>基础套餐</h3>
+                <div class="plan-price">$299</div>
+                <p>适合初创企业和个人品牌</p>
+            </div>
+            <ul class="plan-features">
+                <li>基础Logo设计</li>
+                <li>3个初稿方案</li>
+                <li>2次修改机会</li>
+                <li>标准文件格式 (PNG, JPG)</li>
+                <li>7-10个工作日交付</li>
+                <li>基础品牌指导</li>
+            </ul>
+            <button class="select-plan-btn" data-plan-id="basic" data-stripe-product="wedesign-basic-sandbox">
+                选择基础套餐
+            </button>
+        </div>
+
+        <!-- 标准套餐 -->
+        <div class="plan-card recommended" data-plan="standard">
+            <div class="plan-badge">最受欢迎</div>
+            <div class="plan-header">
+                <h3>标准套餐</h3>
+                <div class="plan-price">$599</div>
+                <p>适合成长型企业</p>
+            </div>
+            <ul class="plan-features">
+                <li>完整Logo设计</li>
+                <li>5个初稿方案</li>
+                <li>4次修改机会</li>
+                <li>源文件交付 (AI, EPS, SVG)</li>
+                <li>简单应用场景设计</li>
+                <li>5-7个工作日交付</li>
+                <li>品牌应用指导</li>
+            </ul>
+            <button class="select-plan-btn" data-plan-id="standard" data-stripe-product="wedesign-standard-sandbox">
+                选择标准套餐
+            </button>
+        </div>
+
+        <!-- 高级套餐 -->
+        <div class="plan-card" data-plan="premium">
+            <div class="plan-header">
+                <h3>高级套餐</h3>
+                <div class="plan-price">$999</div>
+                <p>适合成熟企业品牌升级</p>
+            </div>
+            <ul class="plan-features">
+                <li>品牌系统设计</li>
+                <li>8个初稿方案</li>
+                <li>无限修改</li>
+                <li>所有源文件</li>
+                <li>完整应用场景设计</li>
+                <li>品牌指南文档</li>
+                <li>3-5个工作日交付</li>
+                <li>优先设计支持</li>
+            </ul>
+            <button class="select-plan-btn" data-plan-id="premium" data-stripe-product="wedesign-premium-sandbox">
+                选择高级套餐
+            </button>
+        </div>
+    </div>
+
+    <!-- 套餐对比 -->
+    <section class="plan-comparison">
+        <h2 style="text-align: center; margin-bottom: 30px;">套餐详细对比</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>功能</th>
+                    <th>基础套餐</th>
+                    <th>标准套餐</th>
+                    <th>高级套餐</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>初稿方案数量</td>
+                    <td>3个</td>
+                    <td>5个</td>
+                    <td>8个</td>
+                </tr>
+                <tr>
+                    <td>修改次数</td>
+                    <td>2次</td>
+                    <td>4次</td>
+                    <td>无限</td>
+                </tr>
+                <tr>
+                    <td>交付时间</td>
+                    <td>7-10工作日</td>
+                    <td>5-7工作日</td>
+                    <td>3-5工作日</td>
+                </tr>
+                <tr>
+                    <td>源文件格式</td>
+                    <td>PNG, JPG</td>
+                    <td>AI, EPS, SVG, PNG, JPG</td>
+                    <td>所有格式 + 分层文件</td>
+                </tr>
+                <tr>
+                    <td>应用场景设计</td>
+                    <td>-</td>
+                    <td>简单场景</td>
+                    <td>完整场景</td>
+                </tr>
+                <tr>
+                    <td>品牌指南</td>
+                    <td>基础指导</td>
+                    <td>应用指导</td>
+                    <td>完整指南文档</td>
+                </tr>
+                <tr>
+                    <td>设计支持</td>
+                    <td>标准支持</td>
+                    <td>优先支持</td>
+                    <td>专属支持</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 常见问题 -->
+    <section class="faq-section">
+        <h2 style="text-align: center; margin-bottom: 40px;">常见问题</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">
+                支付流程是怎样的？
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                选择套餐 → 填写设计需求 → 上传参考材料 → 支付 → 开始设计 → 交付成果
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">
+                可以修改套餐吗？
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                在设计开始前可以升级套餐，差价补足即可。设计开始后无法降级套餐。
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">
+                不满意可以退款吗？
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                在初稿提交前可以申请全额退款。初稿提交后，根据完成进度按比例退款。
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">
+                设计需要提供哪些信息？
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                公司信息、行业、设计风格偏好、色彩偏好、参考案例、特殊要求等。
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer style="background: #1f2937; color: white; padding: 40px 20px; text-align: center;">
+        <p>© 2026 Wedesign. 专业设计服务。</p>
+        <p>需要帮助？联系: support@wedesign.com</p>
+    </footer>
+
+    <script>
+        // 套餐选择逻辑
+        document.addEventListener('DOMContentLoaded', function() {
+            const planButtons = document.querySelectorAll('.select-plan-btn');
+            const stripe = Stripe('pk_test_51T4CWWCY5vZ28ogKbNxKWfafKiu7uT2wAppsuDk520mNDJDoV3H4wzZAE72T5I2wv1kVlRerZdcM8H7YmmPz8J2u00lRsGSBq4');
+            
+            // 支付链接映射（等待师傅提供）
+            const paymentLinks = {
+                'wedesign-basic-sandbox': '等待师傅提供 https://buy.stripe.com/test_...',
+                'wedesign-standard-sandbox': '等待师傅提供 https://buy.stripe.com/test_...',
+                'wedesign-premium-sandbox': '等待师傅提供 https://buy.stripe.com/test_...'
+            };
+            
+            planButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const planId = this.dataset.planId;
+                    const stripeProductId = this.dataset.stripeProduct;
+                    console.log('选择套餐:', planId, 'Stripe产品:', stripeProductId);
+                    
+                    // 显示加载状态
+                    const originalText = this.textContent;
+                    this.innerHTML = '处理中...';
+                    this.disabled = true;
+                    
+                    try {
+                        // 保存选择的套餐
+                        localStorage.setItem('selectedPlan', planId);
+                        localStorage.setItem('stripeProductId', stripeProductId);
+                        
+                        // 检查支付链接是否已配置
+                        const paymentLink = paymentLinks[stripeProductId];
+                        if (paymentLink && !paymentLink.includes('等待')) {
+                            // 直接跳转到支付页面
+                            window.location.href = `../pages/checkout.html?plan=${planId}&product=${stripeProductId}`;
+                        } else {
+                            // 跳转到设计信息表单
+                            window.location.href = '../pages/order.html';
+                        }
+                        
+                    } catch (error) {
+                        console.error('套餐选择错误:', error);
+                        alert('选择套餐时出错，请重试');
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }
+                });
+            });
+            
+            // FAQ切换
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('span');
+                    
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                        icon.textContent = '+';
+                    } else {
+                        answer.style.display = 'block';
+                        icon.textContent = '−';
+                    }
+                });
+            });
+            
+            // 移动端导航切换
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                });
+                
+                // 响应式调整
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        navMenu.style.display = 'flex';
+                    } else {
+                        navMenu.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

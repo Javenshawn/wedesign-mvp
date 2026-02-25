@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-02-24T12:43:39.595Z",
+  "results": [
+    {
+      "domain": "wedesign.design",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": 349,
+      "server": "Vercel",
+      "title": "Wedesign - Professional Design Services",
+      "success": true
+    },
+    {
+      "domain": "www.wedesign.design",
+      "status": 401,
+      "statusText": "Unauthorized",
+      "responseTime": 445,
+      "server": "Vercel",
+      "title": "Authentication Required",
+      "success": false
+    },
+    {
+      "domain": "wedesign-mvp.vercel.app",
+      "status": 200,
+      "statusText": "OK",
+      "responseTime": 377,
+      "server": "Vercel",
+      "title": "Wedesign - Professional Design Services",
+      "success": true
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "successful": 2,
+    "failed": 1,
+    "successRate": 67
+  },
+  "recommendations": [
+    {
+      "priority": "高",
+      "issue": "www.wedesign.design返回401错误",
+      "action": "联系Vercel支持解决域名配置问题",
+      "impact": "用户无法通过www域名访问"
+    }
+  ]
+}

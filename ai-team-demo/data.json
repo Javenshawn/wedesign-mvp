@@ -1,0 +1,305 @@
+{
+  "agents": [
+    {
+      "id": 1,
+      "name": "丽丽",
+      "role": "分析主管",
+      "currentTask": "分析需求文档",
+      "emotion": "thinking",
+      "lastUpdate": "2026-02-24T02:44:19.211925"
+    },
+    {
+      "id": 2,
+      "name": "小宝",
+      "role": "开发工程师",
+      "currentTask": "后端接口实现",
+      "emotion": "excited",
+      "lastUpdate": "2026-02-24T02:46:19.266630"
+    },
+    {
+      "id": 3,
+      "name": "师傅",
+      "role": "项目总监",
+      "currentTask": "资源分配协调",
+      "emotion": "thinking",
+      "lastUpdate": "2026-02-24T02:43:49.208930"
+    },
+    {
+      "id": 4,
+      "name": "观察者",
+      "role": "系统监控",
+      "currentTask": "系统性能监控",
+      "emotion": "focused",
+      "lastUpdate": "2026-02-24T02:46:34.267906"
+    },
+    {
+      "id": 5,
+      "name": "协调员",
+      "role": "任务分配",
+      "currentTask": "资源需求管理",
+      "emotion": "focused",
+      "lastUpdate": "2026-02-24T02:45:34.261347"
+    },
+    {
+      "id": 6,
+      "name": "质检员",
+      "role": "质量保证",
+      "currentTask": "兼容性验证测试",
+      "emotion": "happy",
+      "lastUpdate": "2026-02-24T02:46:04.265129"
+    }
+  ],
+  "workLogs": [
+    {
+      "agent": "系统",
+      "content": "真实工作内容播报系统已启动",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:32:00.000Z",
+      "source": "system"
+    },
+    {
+      "agent": "丽丽",
+      "content": "开始分析师傅的实时工作展示需求",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:32:10.000Z",
+      "source": "manual"
+    },
+    {
+      "agent": "小宝",
+      "content": "收到任务：克隆voxyz.space网站",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:32:20.000Z",
+      "source": "manual"
+    },
+    {
+      "agent": "师傅",
+      "content": "要求：网页显示AI代理实时工作内容",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:32:30.000Z",
+      "source": "manual"
+    },
+    {
+      "agent": "观察者",
+      "content": "开始监控实时工作系统状态",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:32:40.000Z",
+      "source": "manual"
+    },
+    {
+      "agent": "协调员",
+      "content": "分配网站克隆开发任务",
+      "emotion": "happy",
+      "timestamp": "2026-02-24T02:32:50.000Z",
+      "source": "manual"
+    },
+    {
+      "agent": "质检员",
+      "content": "测试实时工作内容展示功能",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:33:00.000Z",
+      "source": "manual"
+    },
+    {
+      "agent": "协调员",
+      "content": "团队进度协调",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:39:49.183027",
+      "source": "auto"
+    },
+    {
+      "agent": "师傅",
+      "content": "项目进度审核",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:40:04.185647",
+      "source": "auto"
+    },
+    {
+      "agent": "丽丽",
+      "content": "进度跟踪报告",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:40:19.187287",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "运行日志分析",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:40:34.188926",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "运行日志分析",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:40:49.190592",
+      "source": "auto"
+    },
+    {
+      "agent": "协调员",
+      "content": "协作流程优化",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:41:04.192213",
+      "source": "auto"
+    },
+    {
+      "agent": "协调员",
+      "content": "任务分配调度",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:41:19.193412",
+      "source": "auto"
+    },
+    {
+      "agent": "质检员",
+      "content": "安全渗透测试",
+      "emotion": "happy",
+      "timestamp": "2026-02-24T02:41:34.194526",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "系统性能监控",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:41:49.196067",
+      "source": "auto"
+    },
+    {
+      "agent": "丽丽",
+      "content": "技术方案评估",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:42:04.197868",
+      "source": "auto"
+    },
+    {
+      "agent": "师傅",
+      "content": "质量把控检查",
+      "emotion": "happy",
+      "timestamp": "2026-02-24T02:42:19.199388",
+      "source": "auto"
+    },
+    {
+      "agent": "协调员",
+      "content": "资源需求管理",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:42:34.200463",
+      "source": "auto"
+    },
+    {
+      "agent": "小宝",
+      "content": "代码审查检查",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:42:49.201850",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "安全漏洞扫描",
+      "emotion": "happy",
+      "timestamp": "2026-02-24T02:43:04.203418",
+      "source": "auto"
+    },
+    {
+      "agent": "质检员",
+      "content": "质量报告生成",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:43:19.205244",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "安全漏洞扫描",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:43:34.206636",
+      "source": "auto"
+    },
+    {
+      "agent": "师傅",
+      "content": "资源分配协调",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:43:49.208948",
+      "source": "auto"
+    },
+    {
+      "agent": "小宝",
+      "content": "代码审查检查",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:44:04.210055",
+      "source": "auto"
+    },
+    {
+      "agent": "丽丽",
+      "content": "分析需求文档",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:44:19.211942",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "用户体验跟踪",
+      "emotion": "happy",
+      "timestamp": "2026-02-24T02:44:34.213612",
+      "source": "auto"
+    },
+    {
+      "agent": "小宝",
+      "content": "性能调优测试",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:44:49.246968",
+      "source": "auto"
+    },
+    {
+      "agent": "协调员",
+      "content": "任务分配调度",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:45:04.258211",
+      "source": "auto"
+    },
+    {
+      "agent": "小宝",
+      "content": "部署配置管理",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:45:19.259973",
+      "source": "auto"
+    },
+    {
+      "agent": "协调员",
+      "content": "资源需求管理",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:45:34.261359",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "系统性能监控",
+      "emotion": "thinking",
+      "timestamp": "2026-02-24T02:45:49.262866",
+      "source": "auto"
+    },
+    {
+      "agent": "质检员",
+      "content": "兼容性验证测试",
+      "emotion": "happy",
+      "timestamp": "2026-02-24T02:46:04.265140",
+      "source": "auto"
+    },
+    {
+      "agent": "小宝",
+      "content": "后端接口实现",
+      "emotion": "excited",
+      "timestamp": "2026-02-24T02:46:19.266642",
+      "source": "auto"
+    },
+    {
+      "agent": "观察者",
+      "content": "系统性能监控",
+      "emotion": "focused",
+      "timestamp": "2026-02-24T02:46:34.267932",
+      "source": "auto"
+    }
+  ],
+  "statistics": {
+    "totalTasks": 96,
+    "activeAgents": 6,
+    "signalsToday": 218,
+    "lastUpdated": "2026-02-24T02:46:34.267952"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "tables": {
+    "orders": {
+      "columns": [
+        "id (uuid, primary key)",
+        "project_name (text)",
+        "project_description (text)",
+        "project_type (text)",
+        "deadline (text)",
+        "company_name (text)",
+        "industry (text)",
+        "target_audience (text)",
+        "competitors (text)",
+        "design_style (text)",
+        "color_preferences (text)",
+        "inspiration_links (text)",
+        "contact_name (text)",
+        "email (text)",
+        "phone (text)",
+        "wechat (text)",
+        "selected_plan (text)",
+        "amount (integer)",
+        "currency (text)",
+        "status (text)",
+        "metadata (jsonb)",
+        "created_at (timestamp)"
+      ],
+      "indexes": [
+        "created_at",
+        "status",
+        "selected_plan"
+      ]
+    },
+    "cases": {
+      "columns": [
+        "id (uuid, primary key)",
+        "title (text)",
+        "description (text)",
+        "client (text)",
+        "industry (text)",
+        "services (text[])",
+        "challenge (text)",
+        "solution (text)",
+        "results (text)",
+        "image_url (text)",
+        "project_url (text)",
+        "featured (boolean)",
+        "order_date (date)",
+        "created_at (timestamp)"
+      ],
+      "indexes": [
+        "featured",
+        "order_date",
+        "industry"
+      ]
+    }
+  },
+  "relationships": {
+    "orders_to_cases": "One order can have multiple case studies"
+  },
+  "timestamp": "2026-02-24T12-47-11-726Z"
+}
