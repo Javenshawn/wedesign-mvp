@@ -1,3 +1,5 @@
+console.log("CHECKOUT ROUTE LOADED")
+
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
@@ -6,6 +8,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export async function POST(req: NextRequest) {
+  console.log("POST HIT")
+  console.log("ENV:", { STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ? "OK" : "MISSING", NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ? "OK" : "MISSING" })
   try {
     const { order_id, amount } = await req.json()
 
