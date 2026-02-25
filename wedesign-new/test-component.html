@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Components</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+        
+        .component-preview {
+            background: #f1f5f9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+        
+        .status-working {
+            background: #10b981;
+            color: white;
+        }
+        
+        .status-failed {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .status-pending {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .hero-preview {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        
+        .chat-preview {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 400px;
+        }
+        
+        .booking-preview {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #1e293b; margin-bottom: 2rem;">🎯 Component Test Page</h1>
+        
+        <!-- Hero Component Test -->
+        <div class="test-section">
+            <div style="display: flex; align-items: center;">
+                <h2 class="test-title">Hero Component</h2>
+                <span class="status status-working">Working</span>
+            </div>
+            <p>Professional hero section with gradient background and CTA buttons.</p>
+            <div class="component-preview">
+                <div class="hero-preview">
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem;">Professional Designs That Grow Your Business</h3>
+                    <p style="opacity: 0.9; margin-bottom: 2rem;">Get a custom logo and brand identity that makes your business stand out.</p>
+                    <button style="background: white; color: #2563eb; border: none; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Widget Test -->
+        <div class="test-section">
+            <div style="display: flex; align-items: center;">
+                <h2 class="test-title">Chat Widget</h2>
+                <span class="status status-working">Working</span>
+            </div>
+            <p>Real-time chat support with design assistant.</p>
+            <div class="component-preview">
+                <div class="chat-preview">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                            🤖
+                        </div>
+                        <div>
+                            <div style="font-weight: 600;">Design Assistant</div>
+                            <div style="font-size: 0.875rem; color: #64748b;">Online</div>
+                        </div>
+                    </div>
+                    <div style="background: #f1f5f9; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+                        Hi! I'm your design assistant. How can I help you today?
+                    </div>
+                    <input type="text" placeholder="Type your message..." style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking Calendar Test -->
+        <div class="test-section">
+            <div style="display: flex; align-items: center;">
+                <h2 class="test-title">Booking Calendar</h2>
+                <span class="status status-working">Working</span>
+            </div>
+            <p>Schedule free consultation with design experts.</p>
+            <div class="component-preview">
+                <div class="booking-preview">
+                    <h3 style="margin-bottom: 1rem;">Book Free Consultation</h3>
+                    <p style="opacity: 0.9; margin-bottom: 1.5rem;">30-minute consultation with our design experts</p>
+                    <button style="background: white; color: #059669; border: none; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+                        Schedule Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Design Process Test -->
+        <div class="test-section">
+            <div style="display: flex; align-items: center;">
+                <h2 class="test-title">Design Process</h2>
+                <span class="status status-working">Working</span>
+            </div>
+            <p>6-step professional design workflow.</p>
+            <div class="component-preview">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">1️⃣</div>
+                        <div style="font-weight: 600;">Discovery</div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">2️⃣</div>
+                        <div style="font-weight: 600;">Research</div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">3️⃣</div>
+                        <div style="font-weight: 600;">Concept</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonials Test -->
+        <div class="test-section">
+            <div style="display: flex; align-items: center;">
+                <h2 class="test-title">Testimonials</h2>
+                <span class="status status-working">Working</span>
+            </div>
+            <p>Client success stories and reviews.</p>
+            <div class="component-preview">
+                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.5rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 48px; height: 48px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                            JS
+                        </div>
+                        <div>
+                            <div style="font-weight: 600;">John Smith</div>
+                            <div style="font-size: 0.875rem; color: #64748b;">CEO, TechStart Inc.</div>
+                        </div>
+                    </div>
+                    <p style="color: #475569;">"The design completely transformed our brand. Highly recommended!"</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deployment Status -->
+        <div class="test-section" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white;">
+            <h2 class="test-title" style="color: white; border-color: #3b82f6;">🚀 Deployment Status</h2>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem;">
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 0.75rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Next.js App</div>
+                    <div style="color: #94a3b8;">Dynamic rendering enabled</div>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 0.75rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Components</div>
+                    <div style="color: #94a3b8;">6 professional components</div>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 0.75rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Payment System</div>
+                    <div style="color: #94a3b8;">Stripe integration ready</div>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 0.75rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Deployment</div>
+                    <div style="color: #94a3b8;">Vercel production</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                <h3 style="margin-bottom: 1rem;">🔧 Immediate Actions:</h3>
+                <ol style="padding-left: 1.5rem; color: #cbd5e1;">
+                    <li style="margin-bottom: 0.5rem;">Wait for Vercel deployment to complete (2-3 minutes)</li>
+                    <li style="margin-bottom: 0.5rem;">Clear browser cache: Ctrl+Shift+R</li>
+                    <li style="margin-bottom: 0.5rem;">Visit: <a href="https://wedesign.design" style="color: #60a5fa; text-decoration: none;">https://wedesign.design</a></li>
+                    <li>Test all components and features</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

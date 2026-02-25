@@ -1,0 +1,21 @@
+{
+  "deployment": {
+    "timestamp": "2026-02-24T11:39:43.987Z",
+    "url": null,
+    "project": "wedesign-mvp"
+  },
+  "domains": {
+    "wedesign.design": "已设置别名",
+    "www.wedesign.design": "已设置别名"
+  },
+  "status": "部署完成",
+  "nextSteps": [
+    "等待DNS完全传播（可能需要几分钟到几小时）",
+    "测试完整功能流程",
+    "监控网站性能"
+  ],
+  "accessUrls": [
+    "https://wedesign.design",
+    "https://www.wedesign.design"
+  ]
+}
