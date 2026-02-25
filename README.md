@@ -32,8 +32,8 @@ STRIPE_BASIC_PRICE_ID=price_...
 STRIPE_STANDARD_PRICE_ID=price_...
 STRIPE_PREMIUM_PRICE_ID=price_...
 
-# App
-NEXT_PUBLIC_APP_URL=https://wedesign.design
+# App (optional - defaults to localhost:3000 in dev)
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 ### 2. Database Setup

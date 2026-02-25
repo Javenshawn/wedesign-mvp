@@ -1,2 +1,2 @@
 Health check: 2026-02-24T11:54:26.620Z
-Domain: www.wedesign.design
+Domain: wedesign.design

@@ -1,10 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'wedesign.design', 'www.wedesign.design', 'wedesign-*.vercel.app'],
-    unoptimized: true, // 简化图片优化
+    domains: ['localhost', 'wedesign.design', 'wedesign-*.vercel.app'],
+    unoptimized: true,
   },
-  // 强制HTTPS
   async headers() {
     return [
       {
@@ -22,39 +21,27 @@ const nextConfig = {
       },
     ]
   },
-  // 环境变量
   env: {
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.wedesign.design',
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
   },
-  // 重定向配置
   async redirects() {
-    return [
-      // 从非www重定向到www
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'wedesign.design',
-          },
-        ],
-        destination: 'https://www.wedesign.design/:path*',
-        permanent: true,
-      },
-      // 确保HTTPS
-      {
-        source: '/:path*',
-        missing: [
-          {
-            type: 'header',
-            key: 'x-forwarded-proto',
-            value: 'https',
-          },
-        ],
-        destination: 'https://www.wedesign.design/:path*',
-        permanent: true,
-      },
-    ]
+    // Only apply redirects in production
+    if (process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV === 'production') {
+      return [
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'www.wedesign.design',
+            },
+          ],
+          destination: 'https://wedesign.design/:path*',
+          permanent: true,
+        },
+      ]
+    }
+    return []
   },
 }
 

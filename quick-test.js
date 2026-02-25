@@ -2,7 +2,7 @@
 // 快速测试脚本
 const https = require('https');
 
-const domains = ['wedesign.design', 'www.wedesign.design', 'null'];
+const domains = ['wedesign.design', 'localhost:3000'];
 
 async function quickTest() {
   console.log('🚀 快速域名测试:');

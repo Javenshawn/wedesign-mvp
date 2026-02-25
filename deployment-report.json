@@ -5,8 +5,7 @@
     "project": "wedesign-mvp"
   },
   "domains": {
-    "wedesign.design": "已设置别名",
-    "www.wedesign.design": "已设置别名"
+    "wedesign.design": "已设置别名"
   },
   "status": "部署完成",
   "nextSteps": [
@@ -15,7 +14,6 @@
     "监控网站性能"
   ],
   "accessUrls": [
-    "https://wedesign.design",
-    "https://www.wedesign.design"
+    "https://wedesign.design"
   ]
 }
