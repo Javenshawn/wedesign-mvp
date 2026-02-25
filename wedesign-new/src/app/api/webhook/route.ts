@@ -12,8 +12,13 @@ const supabase = createClient(
 )
 
 export async function POST(req: NextRequest) {
+  console.log("WEBHOOK ROUTE HIT")
   const body = await req.text()
+  console.log("Body length:", body.length)
   const sig = req.headers.get("stripe-signature")!
+  console.log("Signature present:", !!sig)
+  console.log("Webhook secret configured:", !!process.env.STRIPE_WEBHOOK_SECRET)
+  
   let event: Stripe.Event
   try {
     event = stripe.webhooks.constructEvent(
@@ -21,7 +26,9 @@ export async function POST(req: NextRequest) {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     )
+    console.log("Event constructed successfully:", event.type)
   } catch (err: any) {
+    console.log("Webhook verification error:", err.message)
     return NextResponse.json({ error: err.message }, { status: 400 })
   }
 
